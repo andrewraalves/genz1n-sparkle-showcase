@@ -130,21 +130,29 @@ function Index() {
         ref={heroRef}
         className="relative h-screen w-full overflow-hidden flex items-center justify-center"
       >
-        {/* Tech grid (animated infinite drift) */}
-        <div className="absolute inset-0 z-0 tech-grid pointer-events-none" />
-        {/* Pulsing cells layer */}
-        <div className="absolute inset-0 z-0 cells-layer pointer-events-none" />
-        {/* Random flickering cells */}
-        <div className="absolute inset-0 z-0 cells-flicker pointer-events-none" />
-        {/* Vertical scan sweep */}
-        <div className="absolute inset-x-0 top-0 z-0 scan-line pointer-events-none" />
+        {/* Holographic radar background */}
+        <div className="absolute inset-0 z-0 radar-bg pointer-events-none" />
 
-        {/* Ambient mesh blobs */}
-        <div className="absolute inset-0 z-0 pointer-events-none">
-          <div className="absolute top-[-10%] left-[-10%] w-[60%] h-[60%] bg-blue-500/15 rounded-full blur-[120px] animate-mesh-1" />
-          <div className="absolute bottom-[-10%] right-[-10%] w-[70%] h-[70%] bg-indigo-500/10 rounded-full blur-[140px] animate-mesh-2" />
-          <div className="absolute top-1/4 right-1/4 w-[40%] h-[40%] bg-accent/10 rounded-full blur-[100px] animate-mesh-3" />
+        {/* Radar sweep */}
+        <div className="absolute inset-0 z-[1] pointer-events-none">
+          <div className="radar-sweep" />
         </div>
+
+        {/* Concentric radar rings */}
+        <div className="absolute inset-0 z-[1] pointer-events-none">
+          <div className="radar-core" />
+          <div className="radar-ring" style={{ width: 180, height: 180, opacity: 0.9 }} />
+          <div className="radar-ring" style={{ width: 320, height: 320, opacity: 0.65, borderColor: "#0099FF" }} />
+          <div className="radar-ring" style={{ width: 500, height: 500, opacity: 0.45, borderColor: "rgba(0, 212, 255, 0.6)" }} />
+          <div className="radar-ring" style={{ width: 720, height: 720, opacity: 0.28, borderColor: "rgba(0, 153, 255, 0.5)" }} />
+          <div className="radar-ring" style={{ width: 980, height: 980, opacity: 0.16, borderColor: "#003366" }} />
+          <div className="radar-pulse-ring" />
+          <div className="radar-pulse-ring" style={{ animationDelay: "1.6s" }} />
+          <div className="radar-pulse-ring" style={{ animationDelay: "3.2s" }} />
+        </div>
+
+        {/* Subtle particles */}
+        <div className="absolute inset-0 z-[1] particles pointer-events-none" />
 
         {/* Tech HUD cursor ring */}
         <div ref={hudRef} className="z-[3] cursor-hud">
@@ -152,11 +160,11 @@ function Index() {
           <div className="hud-tick w-px h-1.5 -bottom-2 left-1/2 -translate-x-1/2" />
           <div className="hud-tick h-px w-1.5 -left-2 top-1/2 -translate-y-1/2" />
           <div className="hud-tick h-px w-1.5 -right-2 top-1/2 -translate-y-1/2" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-0.5 h-0.5 rounded-full bg-[hsl(210_80%_88%_/_0.6)]" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-0.5 h-0.5 rounded-full bg-[hsl(195_100%_88%_/_0.7)]" />
         </div>
 
         {/* Vignette */}
-        <div className="absolute inset-0 z-[2] pointer-events-none bg-[radial-gradient(ellipse_at_center,transparent_50%,hsl(230_15%_4%/0.9)_100%)]" />
+        <div className="absolute inset-0 z-[2] pointer-events-none bg-[radial-gradient(ellipse_at_center,transparent_55%,#000208_100%)]" />
 
         <div className="relative z-10 text-center px-6">
           <p className="text-accent font-mono text-xs tracking-[0.4em] uppercase mb-2 animate-hero-1">
