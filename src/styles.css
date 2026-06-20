@@ -18,12 +18,15 @@
 }
 
 :root {
-  --background: hsl(230 15% 4%);
+  --background: hsl(220 60% 3%);
   --foreground: hsl(0 0% 98%);
-  --muted: hsl(230 10% 60%);
-  --accent: hsl(210 100% 70%);
-  --border: hsl(0 0% 100% / 0.1);
-  --surface: hsl(230 15% 8%);
+  --muted: hsl(210 20% 65%);
+  --accent: hsl(192 100% 50%);
+  --border: hsl(195 100% 70% / 0.12);
+  --surface: hsl(220 50% 7%);
+  --neon-cyan: #00D4FF;
+  --neon-blue: #0099FF;
+  --neon-deep: #003366;
 }
 
 @keyframes mesh-drift {
@@ -56,67 +59,101 @@
   backdrop-filter: blur(12px);
   background: rgba(4, 5, 10, 0.8);
 }
-@keyframes grid-drift {
-  0% { background-position: 0 0, 0 0; }
-  100% { background-position: 56px 56px, 56px 56px; }
+/* Holographic radar background */
+@keyframes radar-pulse {
+  0% { transform: translate(-50%, -50%) scale(0.4); opacity: 0; }
+  20% { opacity: 0.9; }
+  100% { transform: translate(-50%, -50%) scale(2.6); opacity: 0; }
 }
-@keyframes cells-pulse {
-  0%, 100% { opacity: 0.15; transform: scale(1); }
-  50% { opacity: 0.45; transform: scale(1.05); }
+@keyframes radar-sweep {
+  0% { transform: translate(-50%, -50%) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
 }
-@keyframes scan-sweep {
-  0% { transform: translateY(-30%); opacity: 0; }
-  20% { opacity: 1; }
-  80% { opacity: 1; }
-  100% { transform: translateY(130%); opacity: 0; }
+@keyframes core-glow {
+  0%, 100% { opacity: 0.85; filter: blur(0px); }
+  50% { opacity: 1; filter: blur(1px); }
 }
-@keyframes cell-flicker {
-  0%, 100% { opacity: 0; }
-  50% { opacity: 1; }
+@keyframes particles-drift {
+  0% { background-position: 0 0, 0 0, 0 0; }
+  100% { background-position: 600px 400px, -500px 350px, 300px -450px; }
+}
+@keyframes ambient-shift {
+  0%, 100% { opacity: 0.55; }
+  50% { opacity: 0.85; }
 }
 
-@utility tech-grid {
+@utility radar-bg {
+  background:
+    radial-gradient(ellipse at 50% 45%, hsl(210 100% 18% / 0.55) 0%, transparent 55%),
+    radial-gradient(ellipse at center, #001a33 0%, #000814 55%, #000208 100%);
+  animation: ambient-shift 10s ease-in-out infinite;
+}
+@utility radar-ring {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  border-radius: 9999px;
+  border: 1px solid #00D4FF;
+  box-shadow:
+    0 0 24px rgba(0, 212, 255, 0.45),
+    inset 0 0 24px rgba(0, 153, 255, 0.25);
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+}
+@utility radar-pulse-ring {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 220px;
+  height: 220px;
+  border-radius: 9999px;
+  border: 1px solid rgba(0, 212, 255, 0.7);
+  box-shadow: 0 0 40px rgba(0, 212, 255, 0.5), inset 0 0 30px rgba(0, 153, 255, 0.3);
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  animation: radar-pulse 5s cubic-bezier(0.2, 0.7, 0.3, 1) infinite;
+}
+@utility radar-core {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 480px;
+  height: 480px;
+  border-radius: 9999px;
+  transform: translate(-50%, -50%);
+  background:
+    radial-gradient(circle at center,
+      rgba(0, 212, 255, 0.35) 0%,
+      rgba(0, 153, 255, 0.18) 25%,
+      rgba(0, 51, 102, 0.12) 55%,
+      transparent 75%);
+  filter: blur(6px);
+  pointer-events: none;
+  animation: core-glow 4s ease-in-out infinite;
+}
+@utility radar-sweep {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 900px;
+  height: 900px;
+  border-radius: 9999px;
+  transform: translate(-50%, -50%);
+  background: conic-gradient(from 0deg, transparent 0deg, rgba(0, 212, 255, 0.18) 30deg, transparent 60deg, transparent 360deg);
+  mask-image: radial-gradient(circle, black 0 50%, transparent 70%);
+  -webkit-mask-image: radial-gradient(circle, black 0 50%, transparent 70%);
+  pointer-events: none;
+  animation: radar-sweep 12s linear infinite;
+  opacity: 0.55;
+}
+@utility particles {
   background-image:
-    linear-gradient(to right, rgba(180, 200, 255, 0.07) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(180, 200, 255, 0.07) 1px, transparent 1px);
-  background-size: 56px 56px, 56px 56px;
-  mask-image: radial-gradient(ellipse at center, black 30%, transparent 85%);
-  -webkit-mask-image: radial-gradient(ellipse at center, black 30%, transparent 85%);
-  animation: grid-drift 8s linear infinite;
-}
-@utility cells-layer {
-  background-image: radial-gradient(
-    circle at center,
-    hsl(265 90% 75% / 0.5) 0,
-    hsl(265 90% 75% / 0.5) 1.5px,
-    transparent 2px
-  );
-  background-size: 56px 56px;
-  background-position: 28px 28px;
-  mask-image: radial-gradient(ellipse at center, black 20%, transparent 75%);
-  -webkit-mask-image: radial-gradient(ellipse at center, black 20%, transparent 75%);
-  animation: cells-pulse 4s ease-in-out infinite, grid-drift 14s linear infinite reverse;
-}
-@utility cells-flicker {
-  background-image:
-    radial-gradient(circle at 15% 22%, hsl(210 100% 70% / 0.6) 0 2px, transparent 3px),
-    radial-gradient(circle at 78% 35%, hsl(265 90% 75% / 0.6) 0 2px, transparent 3px),
-    radial-gradient(circle at 42% 68%, hsl(180 100% 70% / 0.6) 0 2px, transparent 3px),
-    radial-gradient(circle at 88% 82%, hsl(265 90% 75% / 0.6) 0 2px, transparent 3px),
-    radial-gradient(circle at 25% 88%, hsl(210 100% 70% / 0.6) 0 2px, transparent 3px);
-  animation: cell-flicker 3s ease-in-out infinite;
-}
-@utility scan-line {
-  background: linear-gradient(
-    to bottom,
-    transparent 0%,
-    hsl(265 90% 70% / 0.08) 45%,
-    hsl(210 100% 70% / 0.15) 50%,
-    hsl(265 90% 70% / 0.08) 55%,
-    transparent 100%
-  );
-  height: 50%;
-  animation: scan-sweep 7s ease-in-out infinite;
+    radial-gradient(circle at 12% 18%, rgba(0, 212, 255, 0.6) 0 1px, transparent 2px),
+    radial-gradient(circle at 78% 24%, rgba(0, 153, 255, 0.5) 0 1px, transparent 2px),
+    radial-gradient(circle at 38% 82%, rgba(0, 212, 255, 0.5) 0 1px, transparent 2px);
+  background-size: 600px 400px, 500px 350px, 300px 450px;
+  animation: particles-drift 60s linear infinite, ambient-shift 6s ease-in-out infinite;
+  opacity: 0.6;
 }
 @keyframes hud-pulse {
   0%, 100% { opacity: 0.45; }
