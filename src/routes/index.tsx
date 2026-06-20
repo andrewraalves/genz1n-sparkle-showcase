@@ -130,8 +130,14 @@ function Index() {
         ref={heroRef}
         className="relative h-screen w-full overflow-hidden flex items-center justify-center"
       >
-        {/* Tech grid */}
+        {/* Tech grid (animated infinite drift) */}
         <div className="absolute inset-0 z-0 tech-grid pointer-events-none" />
+        {/* Pulsing cells layer */}
+        <div className="absolute inset-0 z-0 cells-layer pointer-events-none" />
+        {/* Random flickering cells */}
+        <div className="absolute inset-0 z-0 cells-flicker pointer-events-none" />
+        {/* Vertical scan sweep */}
+        <div className="absolute inset-x-0 top-0 z-0 scan-line pointer-events-none" />
 
         {/* Ambient mesh blobs */}
         <div className="absolute inset-0 z-0 pointer-events-none">
