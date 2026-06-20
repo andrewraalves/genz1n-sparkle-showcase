@@ -120,12 +120,23 @@
 }
 @utility cursor-glow {
   background: radial-gradient(
-    600px circle at var(--mx, 50%) var(--my, 30%),
-    hsl(265 90% 65% / 0.28),
-    hsl(210 100% 60% / 0.15) 25%,
-    transparent 60%
+    420px circle at var(--mx, 50%) var(--my, 50%),
+    hsl(210 60% 92% / 0.14) 0%,
+    hsl(200 50% 75% / 0.06) 40%,
+    transparent 70%
   );
-  transition: background 0.2s ease-out;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+}
+@utility cursor-ring {
+  background: radial-gradient(
+    24px circle at var(--mx, 50%) var(--my, 50%),
+    hsl(210 60% 92% / 0.35) 0%,
+    hsl(210 60% 92% / 0.08) 40%,
+    transparent 70%
+  );
+  mix-blend-mode: screen;
+  pointer-events: none;
 }
 @utility animate-hero-1 {
   animation: fadeInUp 0.8s var(--ease-out-expo) both;
