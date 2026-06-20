@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useEffect, useRef } from "react";
 import project1 from "@/assets/project-1.jpg";
 import project2 from "@/assets/project-2.jpg";
 import project3 from "@/assets/project-3.jpg";
@@ -75,6 +76,32 @@ const projects: Project[] = [
 ];
 
 function Index() {
+  const heroRef = useRef<HTMLElement>(null);
+  const glowRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const hero = heroRef.current;
+    const glow = glowRef.current;
+    if (!hero || !glow) return;
+
+    let raf = 0;
+    const onMove = (e: PointerEvent) => {
+      const rect = hero.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        glow.style.setProperty("--mx", `${x}px`);
+        glow.style.setProperty("--my", `${y}px`);
+      });
+    };
+    hero.addEventListener("pointermove", onMove);
+    return () => {
+      hero.removeEventListener("pointermove", onMove);
+      cancelAnimationFrame(raf);
+    };
+  }, []);
+
   return (
     <div className="bg-background text-foreground font-sans">
       {/* Navigation */}
@@ -100,14 +127,27 @@ function Index() {
       {/* Hero */}
       <section
         id="top"
+        ref={heroRef}
         className="relative h-screen w-full overflow-hidden flex items-center justify-center"
       >
-        {/* Animated mesh background */}
-        <div className="absolute inset-0 z-0">
-          <div className="absolute top-[-10%] left-[-10%] w-[60%] h-[60%] bg-blue-500/20 rounded-full blur-[120px] animate-mesh-1" />
+        {/* Tech grid */}
+        <div className="absolute inset-0 z-0 tech-grid pointer-events-none" />
+
+        {/* Ambient mesh blobs */}
+        <div className="absolute inset-0 z-0 pointer-events-none">
+          <div className="absolute top-[-10%] left-[-10%] w-[60%] h-[60%] bg-blue-500/15 rounded-full blur-[120px] animate-mesh-1" />
           <div className="absolute bottom-[-10%] right-[-10%] w-[70%] h-[70%] bg-indigo-500/10 rounded-full blur-[140px] animate-mesh-2" />
           <div className="absolute top-1/4 right-1/4 w-[40%] h-[40%] bg-accent/10 rounded-full blur-[100px] animate-mesh-3" />
         </div>
+
+        {/* Cursor-following radial glow */}
+        <div
+          ref={glowRef}
+          className="absolute inset-0 z-[1] cursor-glow pointer-events-none"
+        />
+
+        {/* Vignette */}
+        <div className="absolute inset-0 z-[2] pointer-events-none bg-[radial-gradient(ellipse_at_center,transparent_50%,hsl(230_15%_4%/0.9)_100%)]" />
 
         <div className="relative z-10 text-center px-6">
           <p className="text-accent font-mono text-xs tracking-[0.4em] uppercase mb-2 animate-hero-1">
@@ -132,7 +172,7 @@ function Index() {
           </div>
         </div>
 
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce opacity-20">
+        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce opacity-20 z-10">
           <div className="w-px h-12 bg-foreground" />
         </div>
       </section>

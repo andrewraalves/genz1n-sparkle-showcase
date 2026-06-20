@@ -56,6 +56,23 @@
   backdrop-filter: blur(12px);
   background: rgba(4, 5, 10, 0.8);
 }
+@utility tech-grid {
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse at center, black 40%, transparent 85%);
+  -webkit-mask-image: radial-gradient(ellipse at center, black 40%, transparent 85%);
+}
+@utility cursor-glow {
+  background: radial-gradient(
+    600px circle at var(--mx, 50%) var(--my, 30%),
+    hsl(265 90% 65% / 0.25),
+    hsl(210 100% 60% / 0.15) 25%,
+    transparent 60%
+  );
+  transition: background 0.2s ease-out;
+}
 @utility animate-hero-1 {
   animation: fadeInUp 0.8s var(--ease-out-expo) both;
 }
