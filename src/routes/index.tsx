@@ -77,12 +77,12 @@ const projects: Project[] = [
 
 function Index() {
   const heroRef = useRef<HTMLElement>(null);
-  const glowRef = useRef<HTMLDivElement>(null);
+  const hudRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const hero = heroRef.current;
-    const glow = glowRef.current;
-    if (!hero || !glow) return;
+    const hud = hudRef.current;
+    if (!hero || !hud) return;
 
     let raf = 0;
     const onMove = (e: PointerEvent) => {
@@ -91,8 +91,8 @@ function Index() {
       const y = e.clientY - rect.top;
       cancelAnimationFrame(raf);
       raf = requestAnimationFrame(() => {
-        glow.style.setProperty("--mx", `${x}px`);
-        glow.style.setProperty("--my", `${y}px`);
+        hud.style.left = `${x}px`;
+        hud.style.top = `${y}px`;
       });
     };
     hero.addEventListener("pointermove", onMove);
