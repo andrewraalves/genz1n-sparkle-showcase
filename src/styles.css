@@ -18,12 +18,15 @@
 }
 
 :root {
-  --background: hsl(230 15% 4%);
+  --background: hsl(220 60% 3%);
   --foreground: hsl(0 0% 98%);
-  --muted: hsl(230 10% 60%);
-  --accent: hsl(210 100% 70%);
-  --border: hsl(0 0% 100% / 0.1);
-  --surface: hsl(230 15% 8%);
+  --muted: hsl(210 20% 65%);
+  --accent: hsl(192 100% 50%);
+  --border: hsl(195 100% 70% / 0.12);
+  --surface: hsl(220 50% 7%);
+  --neon-cyan: #00D4FF;
+  --neon-blue: #0099FF;
+  --neon-deep: #003366;
 }
 
 @keyframes mesh-drift {
