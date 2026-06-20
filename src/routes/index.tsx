@@ -149,8 +149,9 @@ function Index() {
         {/* Cursor-following radial glow */}
         <div
           ref={glowRef}
-          className="absolute inset-0 z-[1] cursor-glow pointer-events-none"
+          className="absolute inset-0 z-[1] cursor-glow"
         />
+        <div className="absolute inset-0 z-[2] cursor-ring" />
 
         {/* Vignette */}
         <div className="absolute inset-0 z-[2] pointer-events-none bg-[radial-gradient(ellipse_at_center,transparent_50%,hsl(230_15%_4%/0.9)_100%)]" />
