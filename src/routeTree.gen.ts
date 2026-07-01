@@ -9,9 +9,33 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TrabalheConoscoRouteImport } from './routes/trabalhe-conosco'
+import { Route as ProjetosRouteImport } from './routes/projetos'
+import { Route as ContatoRouteImport } from './routes/contato'
+import { Route as AuthRouteImport } from './routes/auth'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ApiChatRouteImport } from './routes/api/chat'
 
+const TrabalheConoscoRoute = TrabalheConoscoRouteImport.update({
+  id: '/trabalhe-conosco',
+  path: '/trabalhe-conosco',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProjetosRoute = ProjetosRouteImport.update({
+  id: '/projetos',
+  path: '/projetos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContatoRoute = ContatoRouteImport.update({
+  id: '/contato',
+  path: '/contato',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -25,32 +49,95 @@ const ApiChatRoute = ApiChatRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/contato': typeof ContatoRoute
+  '/projetos': typeof ProjetosRoute
+  '/trabalhe-conosco': typeof TrabalheConoscoRoute
   '/api/chat': typeof ApiChatRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/contato': typeof ContatoRoute
+  '/projetos': typeof ProjetosRoute
+  '/trabalhe-conosco': typeof TrabalheConoscoRoute
   '/api/chat': typeof ApiChatRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/contato': typeof ContatoRoute
+  '/projetos': typeof ProjetosRoute
+  '/trabalhe-conosco': typeof TrabalheConoscoRoute
   '/api/chat': typeof ApiChatRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/api/chat'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/contato'
+    | '/projetos'
+    | '/trabalhe-conosco'
+    | '/api/chat'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/api/chat'
-  id: '__root__' | '/' | '/api/chat'
+  to:
+    | '/'
+    | '/auth'
+    | '/contato'
+    | '/projetos'
+    | '/trabalhe-conosco'
+    | '/api/chat'
+  id:
+    | '__root__'
+    | '/'
+    | '/auth'
+    | '/contato'
+    | '/projetos'
+    | '/trabalhe-conosco'
+    | '/api/chat'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthRoute: typeof AuthRoute
+  ContatoRoute: typeof ContatoRoute
+  ProjetosRoute: typeof ProjetosRoute
+  TrabalheConoscoRoute: typeof TrabalheConoscoRoute
   ApiChatRoute: typeof ApiChatRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/trabalhe-conosco': {
+      id: '/trabalhe-conosco'
+      path: '/trabalhe-conosco'
+      fullPath: '/trabalhe-conosco'
+      preLoaderRoute: typeof TrabalheConoscoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/projetos': {
+      id: '/projetos'
+      path: '/projetos'
+      fullPath: '/projetos'
+      preLoaderRoute: typeof ProjetosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contato': {
+      id: '/contato'
+      path: '/contato'
+      fullPath: '/contato'
+      preLoaderRoute: typeof ContatoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -70,6 +157,10 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthRoute: AuthRoute,
+  ContatoRoute: ContatoRoute,
+  ProjetosRoute: ProjetosRoute,
+  TrabalheConoscoRoute: TrabalheConoscoRoute,
   ApiChatRoute: ApiChatRoute,
 }
 export const routeTree = rootRouteImport
