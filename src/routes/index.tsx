@@ -1,290 +1,148 @@
-import { createFileRoute } from "@tanstack/react-router";
-import { useEffect, useRef } from "react";
-import project1 from "@/assets/project-1.jpg";
-import project2 from "@/assets/project-2.jpg";
-import project3 from "@/assets/project-3.jpg";
-import project4 from "@/assets/project-4.jpg";
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { useQuery } from "@tanstack/react-query";
+import { projectsQuery, settingsQuery, getSetting } from "@/lib/site-queries";
+import heroVideo from "../../public/hero-bg.mp4.asset.json";
+import { ArrowRight, Sparkles, Zap, Rocket } from "lucide-react";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "GenZ1n — Portfólio de Design" },
-      {
-        name: "description",
-        content:
-          "GenZ1n: portfólio de design esculpindo o futuro digital através de experiências cinematográficas e interfaces líquidas.",
-      },
-      { property: "og:title", content: "GenZ1n — Portfólio de Design" },
-      {
-        property: "og:description",
-        content:
-          "Experiências cinematográficas e interfaces líquidas. Portfólio selecionado 2024.",
-      },
+      { title: "GenZ1n Tech — Estúdio de design digital" },
+      { name: "description", content: "Portfólio, serviços e experiências digitais criadas com um novo padrão de excelência." },
+      { property: "og:title", content: "GenZ1n Tech" },
+      { property: "og:description", content: "Estúdio digital criando o futuro das marcas." },
     ],
   }),
-  component: Index,
+  component: Home,
 });
 
-type Project = {
-  number: string;
-  title: string;
-  category: string;
-  image: string;
-  alt: string;
-  span: string;
-  aspect: string;
-  offset?: string;
-};
+function Home() {
+  const { data: projects } = useQuery(projectsQuery);
+  const { data: settings } = useQuery(settingsQuery);
+  const hero = getSetting(settings, "hero", {
+    title: "GENZ1N",
+    subtitle: "Portfólio de Design 2024",
+    description: "Esculpindo o futuro digital através de experiências cinematográficas e interfaces líquidas.",
+    cta_label: "Explorar Projetos",
+    cta_href: "/projetos",
+  } as { title: string; subtitle: string; description: string; cta_label: string; cta_href: string });
 
-const projects: Project[] = [
-  {
-    number: "01",
-    title: "Cortex Digital",
-    category: "E-commerce de Luxo",
-    image: project1,
-    alt: "Arquitetura futurística atmosférica ao luar",
-    span: "md:col-span-8",
-    aspect: "aspect-[16/10]",
-  },
-  {
-    number: "02",
-    title: "Aura OS",
-    category: "Design de Interface",
-    image: project2,
-    alt: "Refração de luz em copo de vidro",
-    span: "md:col-span-4 md:mt-24",
-    aspect: "aspect-square",
-  },
-  {
-    number: "03",
-    title: "Vanguard",
-    category: "Identidade Visual",
-    image: project3,
-    alt: "Escultura de obsidiana em iluminação de estúdio",
-    span: "md:col-span-5 md:mt-12",
-    aspect: "aspect-[4/5]",
-  },
-  {
-    number: "04",
-    title: "Stellar Core",
-    category: "Web Experiencial",
-    image: project4,
-    alt: "Textura de metal líquido em fluxo cromado",
-    span: "md:col-span-7 md:-mt-24",
-    aspect: "aspect-[16/9]",
-  },
-];
-
-function Index() {
-  const heroRef = useRef<HTMLElement>(null);
-  const hudRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const hero = heroRef.current;
-    const hud = hudRef.current;
-    if (!hero || !hud) return;
-
-    let raf = 0;
-    const onMove = (e: PointerEvent) => {
-      const rect = hero.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(() => {
-        hud.style.left = `${x}px`;
-        hud.style.top = `${y}px`;
-      });
-    };
-    hero.addEventListener("pointermove", onMove);
-    return () => {
-      hero.removeEventListener("pointermove", onMove);
-      cancelAnimationFrame(raf);
-    };
-  }, []);
+  const top = (projects ?? []).slice(0, 4);
 
   return (
-    <div className="bg-background text-foreground font-sans">
-      {/* Navigation */}
-      <nav className="fixed top-0 w-full z-50 glass-nav border-b border-border">
-        <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-          <a href="#top" className="font-black tracking-tighter text-xl">
-            G1.
-          </a>
-          <div className="flex gap-8 text-[11px] uppercase tracking-[0.2em] font-medium">
-            <a href="#trabalhos" className="hover:text-accent transition-colors">
-              Projetos
-            </a>
-            <a href="#sobre" className="hover:text-accent transition-colors">
-              Sobre
-            </a>
-            <a href="#contato" className="hover:text-accent transition-colors">
-              Contato
-            </a>
-          </div>
-        </div>
-      </nav>
-
-      {/* Hero */}
-      <section
-        id="top"
-        ref={heroRef}
-        className="relative h-screen w-full overflow-hidden flex items-center justify-center"
-      >
-        {/* Holographic radar background */}
-        <div className="absolute inset-0 z-0 radar-bg pointer-events-none" />
-
-        {/* Radar sweep */}
-        <div className="absolute inset-0 z-[1] pointer-events-none">
-          <div className="radar-sweep" />
+    <main>
+      {/* HERO with video */}
+      <section className="relative min-h-[92vh] flex items-center justify-center overflow-hidden -mt-16 pt-16">
+        <video
+          className="absolute inset-0 w-full h-full object-cover"
+          src={heroVideo.url}
+          autoPlay
+          muted
+          loop
+          playsInline
+          preload="auto"
+        />
+        <div className="absolute inset-0 hero-overlay" />
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="blob w-[500px] h-[500px] left-[-100px] top-[10%] bg-[#003CFF]" />
+          <div className="blob w-[600px] h-[600px] right-[-150px] bottom-[-100px] bg-[#B800FF]" style={{ animationDelay: "-7s" }} />
         </div>
 
-        {/* Concentric radar rings */}
-        <div className="absolute inset-0 z-[1] pointer-events-none">
-          <div className="radar-core" />
-          <div className="radar-ring" style={{ width: 180, height: 180, opacity: 0.9 }} />
-          <div className="radar-ring" style={{ width: 320, height: 320, opacity: 0.65, borderColor: "#0099FF" }} />
-          <div className="radar-ring" style={{ width: 500, height: 500, opacity: 0.45, borderColor: "rgba(0, 212, 255, 0.6)" }} />
-          <div className="radar-ring" style={{ width: 720, height: 720, opacity: 0.28, borderColor: "rgba(0, 153, 255, 0.5)" }} />
-          <div className="radar-ring" style={{ width: 980, height: 980, opacity: 0.16, borderColor: "#003366" }} />
-          <div className="radar-pulse-ring" />
-          <div className="radar-pulse-ring" style={{ animationDelay: "1.6s" }} />
-          <div className="radar-pulse-ring" style={{ animationDelay: "3.2s" }} />
-        </div>
-
-        {/* Subtle particles */}
-        <div className="absolute inset-0 z-[1] particles pointer-events-none" />
-
-        {/* Tech HUD cursor ring */}
-        <div ref={hudRef} className="z-[3] cursor-hud">
-          <div className="hud-tick w-px h-1.5 -top-2 left-1/2 -translate-x-1/2" />
-          <div className="hud-tick w-px h-1.5 -bottom-2 left-1/2 -translate-x-1/2" />
-          <div className="hud-tick h-px w-1.5 -left-2 top-1/2 -translate-y-1/2" />
-          <div className="hud-tick h-px w-1.5 -right-2 top-1/2 -translate-y-1/2" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-0.5 h-0.5 rounded-full bg-[hsl(195_100%_88%_/_0.7)]" />
-        </div>
-
-        {/* Vignette */}
-        <div className="absolute inset-0 z-[2] pointer-events-none bg-[radial-gradient(ellipse_at_center,transparent_55%,#000208_100%)]" />
-
-        <div className="relative z-10 text-center px-6">
-          <p className="text-accent font-mono text-xs tracking-[0.4em] uppercase mb-2 animate-hero-1">
-            Portfólio de Design 2024
+        <div className="relative z-10 max-w-5xl mx-auto text-center px-6 py-24">
+          <p className="text-accent font-mono text-xs tracking-[0.4em] uppercase mb-4 animate-fade-up">
+            {hero.subtitle}
           </p>
-          <h1 className="text-[clamp(4rem,15vw,12rem)] font-black tracking-tighter leading-none mb-6 animate-hero-2">
-            GENZ1N
+          <h1 className="font-display font-black leading-[0.9] text-[clamp(3.5rem,14vw,11rem)] tracking-tighter animate-fade-up">
+            <span className="text-gradient-brand drop-shadow-[0_4px_40px_rgba(184,0,255,0.4)]">
+              {hero.title}
+            </span>
           </h1>
-          <div className="max-w-md mx-auto">
-            <p className="text-muted text-balance text-lg animate-hero-3">
-              Esculpindo o futuro digital através de experiências cinematográficas
-              e interfaces líquidas.
-            </p>
-          </div>
-          <div className="mt-12 animate-hero-4">
-            <a
-              href="#trabalhos"
-              className="inline-block px-8 py-4 bg-foreground text-background font-bold uppercase text-xs tracking-widest rounded-full hover:bg-accent transition-all"
+          <p className="mt-6 mx-auto max-w-xl text-base md:text-lg text-foreground/80 animate-fade-up">
+            {hero.description}
+          </p>
+          <div className="mt-10 flex flex-wrap gap-4 justify-center animate-fade-up">
+            <Link
+              to={hero.cta_href.startsWith("/") ? (hero.cta_href as "/projetos") : "/projetos"}
+              className="group inline-flex items-center gap-2 px-7 py-3.5 rounded-full gradient-brand text-white font-semibold text-sm uppercase tracking-widest shadow-[0_0_40px_rgba(0,60,255,0.5)] hover:scale-[1.02] transition-transform"
             >
-              Explorar Projetos
-            </a>
+              {hero.cta_label}
+              <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+            </Link>
+            <Link
+              to="/contato"
+              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full glass-panel text-foreground font-semibold text-sm uppercase tracking-widest hover:border-accent transition-colors"
+            >
+              Falar com a gente
+            </Link>
           </div>
-        </div>
-
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce opacity-20 z-10">
-          <div className="w-px h-12 bg-foreground" />
         </div>
       </section>
 
-      {/* Portfolio */}
-      <section id="trabalhos" className="py-32 px-6 max-w-7xl mx-auto">
-        <div className="flex justify-between items-end mb-24">
-          <h2 className="text-5xl font-bold tracking-tight">
-            Trabalhos
-            <br />
-            Selecionados
-          </h2>
-          <p className="font-mono text-xs text-muted mb-2">(01 — 04)</p>
-        </div>
-
-        <div className="grid grid-cols-12 gap-6">
-          {projects.map((p) => (
-            <article key={p.number} className={`col-span-12 ${p.span} group`}>
-              <div
-                className={`relative overflow-hidden ${p.aspect} bg-surface mb-6`}
-              >
-                <img
-                  src={p.image}
-                  alt={p.alt}
-                  loading="lazy"
-                  className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700 opacity-70 group-hover:opacity-100"
-                />
-                <div className="absolute bottom-6 left-6">
-                  <span className="text-xs font-mono text-accent">2024</span>
-                </div>
+      {/* SERVICES / HIGHLIGHTS */}
+      <section className="py-24 px-6 max-w-7xl mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {[
+            { icon: Sparkles, title: "Design Cinematográfico", body: "Interfaces com atmosfera, movimento e narrativa visual." },
+            { icon: Zap, title: "Produto Digital", body: "Do zero ao produto entregue, com iterações rápidas." },
+            { icon: Rocket, title: "Marcas do Futuro", body: "Identidade e sistemas visuais para marcas nativas digitais." },
+          ].map(({ icon: Icon, title, body }) => (
+            <div key={title} className="glass-panel rounded-2xl p-8 hover:border-accent transition-colors">
+              <div className="w-12 h-12 rounded-xl gradient-brand flex items-center justify-center mb-6">
+                <Icon size={22} className="text-white" />
               </div>
-              <div className="flex justify-between items-start">
-                <div>
-                  <h3 className="text-2xl font-bold">{p.title}</h3>
-                  <p className="text-muted">{p.category}</p>
-                </div>
-                <p className="text-sm italic font-serif">{p.number}</p>
-              </div>
-            </article>
+              <h3 className="text-xl font-semibold mb-2">{title}</h3>
+              <p className="text-sm text-muted-foreground">{body}</p>
+            </div>
           ))}
         </div>
       </section>
 
-      {/* Contact */}
-      <section id="contato" className="relative py-48 px-6 overflow-hidden">
-        <div className="max-w-7xl mx-auto border-t border-border pt-24">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-24">
-            <div>
-              <p className="text-accent font-mono text-sm tracking-widest uppercase mb-8">
-                Disponível para Projetos
-              </p>
-              <h2 className="text-[clamp(3rem,8vw,6rem)] font-black tracking-tighter leading-[0.9] mb-12 uppercase">
-                Vamos{" "}
-                <span className="text-stroke italic font-serif">Conversar</span>
-              </h2>
-              <a
-                href="mailto:ola@genz1n.com"
-                className="text-3xl md:text-5xl font-light hover:text-accent transition-colors block border-b-2 border-transparent hover:border-accent w-fit pb-2"
-              >
-                ola@genz1n.com
-              </a>
-            </div>
-
-            <div className="flex flex-col justify-end items-start md:items-end">
-              <div className="flex gap-6">
-                <a
-                  href="#"
-                  className="text-sm uppercase tracking-widest hover:text-accent transition-colors"
-                >
-                  Instagram
-                </a>
-                <a
-                  href="#"
-                  className="text-sm uppercase tracking-widest hover:text-accent transition-colors"
-                >
-                  Behance
-                </a>
-                <a
-                  href="#"
-                  className="text-sm uppercase tracking-widest hover:text-accent transition-colors"
-                >
-                  LinkedIn
-                </a>
-              </div>
-              <p className="text-muted mt-8 text-xs font-mono uppercase tracking-tighter">
-                © 2024 GenZ1n Studio — São Paulo, BR
-              </p>
-            </div>
+      {/* FEATURED PROJECTS */}
+      <section className="py-24 px-6 max-w-7xl mx-auto">
+        <div className="flex justify-between items-end mb-16">
+          <div>
+            <p className="text-accent font-mono text-xs tracking-[0.3em] uppercase mb-3">Selecionados</p>
+            <h2 className="text-4xl md:text-5xl font-bold tracking-tight">Projetos em destaque</h2>
           </div>
+          <Link to="/projetos" className="text-sm text-accent hover:underline hidden md:block">
+            Ver todos →
+          </Link>
         </div>
 
-        <div className="absolute -bottom-20 -right-20 opacity-[0.03] select-none pointer-events-none">
-          <span className="text-[40rem] font-black leading-none">G1</span>
+        <div className="grid grid-cols-12 gap-6">
+          {top.map((p, i) => (
+            <article
+              key={p.id}
+              className={`col-span-12 ${i % 2 === 0 ? "md:col-span-7" : "md:col-span-5"} group`}
+            >
+              <a href={p.project_url || "#"} target="_blank" rel="noreferrer" className="block">
+                <div className="relative overflow-hidden rounded-2xl aspect-[16/10] bg-surface">
+                  {p.image_url && (
+                    <img
+                      src={p.image_url}
+                      alt={p.title}
+                      loading="lazy"
+                      className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 opacity-80 group-hover:opacity-100 transition-all duration-700"
+                    />
+                  )}
+                  <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <span className="px-3 py-1.5 rounded-full gradient-brand text-white text-xs font-semibold flex items-center gap-1">
+                      Ver <ArrowRight size={12} />
+                    </span>
+                  </div>
+                </div>
+                <div className="mt-4 flex justify-between items-start">
+                  <div>
+                    <h3 className="text-xl font-semibold">{p.title}</h3>
+                    <p className="text-sm text-muted-foreground">{p.category}</p>
+                  </div>
+                  <span className="text-xs font-mono text-accent mt-1">{p.year}</span>
+                </div>
+              </a>
+            </article>
+          ))}
         </div>
       </section>
-    </div>
+    </main>
   );
 }
