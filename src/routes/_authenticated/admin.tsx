@@ -412,7 +412,7 @@ function SettingsAdmin() {
 
   async function saveSection(section: string) {
     setSaving(true);
-    const { error } = await supabase.from("site_settings").upsert({ key: section, value: draft[section] });
+    const { error } = await supabase.from("site_settings").upsert({ key: section, value: draft[section] as never });
     setSaving(false);
     if (error) toast.error(error.message);
     else { toast.success("Salvo"); qc.invalidateQueries({ queryKey: ["site_settings"] }); refetch(); }
