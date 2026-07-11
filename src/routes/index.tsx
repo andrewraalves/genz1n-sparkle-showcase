@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { projectsQuery, settingsQuery, getSetting } from "@/lib/site-queries";
-import heroVideo from "../../public/hero-bg.mp4";
+import heroVideo from "../../public/video-bg.mp4";
 import { ArrowRight, Sparkles, Zap, Rocket } from "lucide-react";
 
 export const Route = createFileRoute("/")({
