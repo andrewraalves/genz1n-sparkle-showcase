@@ -86,7 +86,7 @@ function AdminPage() {
         </button>
       </aside>
 
-      <main className="flex-1 p-6 md:p-10 max-w-5xl">
+      <main className="flex-1 p-6 md:p-10">
         {tab === "dashboard" && <Dashboard />}
         {tab === "projects" && <ProjectsAdmin />}
         {tab === "jobs" && <JobsAdmin />}
