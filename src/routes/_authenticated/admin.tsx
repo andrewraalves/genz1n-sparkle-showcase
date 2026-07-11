@@ -59,7 +59,7 @@ function AdminPage() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col md:flex-row">
+    <div className="min-h-screen flex flex-col md:flex-row admin-panel bg-background text-foreground">
       <aside className="md:w-64 md:min-h-screen border-b md:border-b-0 md:border-r border-border p-4 md:p-6 glass-panel md:sticky md:top-0">
         <Link to="/" className="flex items-center gap-2 font-display font-black text-lg mb-8">
           <span className="w-8 h-8 rounded-md gradient-brand" />

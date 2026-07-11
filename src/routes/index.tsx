@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { projectsQuery, settingsQuery, getSetting } from "@/lib/site-queries";
-import heroVideo from "../../public/hero-bg.mp4.asset.json";
+import heroVideo from "../../public/hero-bg.mp4";
 import { ArrowRight, Sparkles, Zap, Rocket } from "lucide-react";
 
 export const Route = createFileRoute("/")({
@@ -35,7 +35,7 @@ function Home() {
       <section className="relative min-h-[92vh] flex items-center justify-center overflow-hidden -mt-16 pt-16">
         <video
           className="absolute inset-0 w-full h-full object-cover"
-          src={heroVideo.url}
+          src={heroVideo}
           autoPlay
           muted
           loop
@@ -53,8 +53,8 @@ function Home() {
             {hero.subtitle}
           </p>
           <h1 className="font-display font-black leading-[0.9] text-[clamp(3.5rem,14vw,11rem)] tracking-tighter animate-fade-up">
-            <span className="text-gradient-brand drop-shadow-[0_4px_40px_rgba(184,0,255,0.4)]">
-              {hero.title}
+            <span className="bg-gradient-to-r from-[#FEFEED] via-[#9CC7DB] to-[#B800FF] bg-clip-text text-transparent drop-shadow-[0_4px_45px_rgba(184,0,255,0.35)]">
+              {hero.title}  
             </span>
           </h1>
           <p className="mt-6 mx-auto max-w-xl text-base md:text-lg text-foreground/80 animate-fade-up">
@@ -63,7 +63,7 @@ function Home() {
           <div className="mt-10 flex flex-wrap gap-4 justify-center animate-fade-up">
             <Link
               to={hero.cta_href.startsWith("/") ? (hero.cta_href as "/projetos") : "/projetos"}
-              className="group inline-flex items-center gap-2 px-7 py-3.5 rounded-full gradient-brand text-white font-semibold text-sm uppercase tracking-widest shadow-[0_0_40px_rgba(0,60,255,0.5)] hover:scale-[1.02] transition-transform"
+              className="group inline-flex items-center gap-2 px-7 py-3.5 rounded-full bg-[#003CFF] text-white font-semibold text-sm uppercase tracking-widest shadow-[0_0_40px_rgba(0,60,255,0.5)] hover:scale-[1.02] transition-transform"
             >
               {hero.cta_label}
               <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
@@ -82,12 +82,27 @@ function Home() {
       <section className="py-24 px-6 max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {[
-            { icon: Sparkles, title: "Design Cinematográfico", body: "Interfaces com atmosfera, movimento e narrativa visual." },
-            { icon: Zap, title: "Produto Digital", body: "Do zero ao produto entregue, com iterações rápidas." },
-            { icon: Rocket, title: "Marcas do Futuro", body: "Identidade e sistemas visuais para marcas nativas digitais." },
-          ].map(({ icon: Icon, title, body }) => (
+            {
+              icon: Sparkles,
+              title: "Design Cinematográfico",
+              body: "Interfaces com atmosfera, movimento e narrativa visual.",
+              iconBg: "bg-[#001167]",
+            },
+            {
+              icon: Zap,
+              title: "Produto Digital",
+              body: "Do zero ao produto entregue, com iterações rápidas.",
+              iconBg: "bg-[#B800FF]",
+            },
+            {
+              icon: Rocket,
+              title: "Marcas do Futuro",
+              body: "Identidade e sistemas visuais para marcas nativas digitais.",
+              iconBg: "bg-[#9CC7DB]",
+            },
+          ].map(({ icon: Icon, title, body, iconBg }) => (
             <div key={title} className="glass-panel rounded-2xl p-8 hover:border-accent transition-colors">
-              <div className="w-12 h-12 rounded-xl gradient-brand flex items-center justify-center mb-6">
+              <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-6 ${iconBg}`}>
                 <Icon size={22} className="text-white" />
               </div>
               <h3 className="text-xl font-semibold mb-2">{title}</h3>

@@ -66,7 +66,7 @@ function ContactPage() {
         <header className="text-center mb-16">
           <p className="text-accent font-mono text-xs tracking-[0.3em] uppercase mb-3">Vamos conversar</p>
           <h1 className="text-5xl md:text-6xl font-bold tracking-tight">
-            <span className="text-gradient-brand">Diga oi</span> para o time.
+            <span className="text-[#B800FF]">Diga oi</span> para o time.
           </h1>
           <p className="mt-4 text-muted-foreground max-w-xl mx-auto">
             Conte sua ideia, um projeto, uma dúvida. A gente responde em até 48h.
@@ -76,10 +76,10 @@ function ContactPage() {
         <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
           {/* Contact info cards - left */}
           <aside className="lg:col-span-2 space-y-4">
-            <InfoCard icon={Mail} label="E-mail" value={contact.email} href={`mailto:${contact.email}`} />
-            <InfoCard icon={Phone} label="Telefone" value={contact.phone} href={`tel:${contact.phone.replace(/\D/g, "")}`} />
-            <InfoCard icon={MapPin} label="Endereço" value={contact.address} />
-            <InfoCard icon={Clock} label="Horário" value={contact.hours} />
+            <InfoCard icon={Mail} label="E-mail" value={contact.email} href={`mailto:${contact.email}`} iconBg="bg-[#001167]" />
+            <InfoCard icon={Phone} label="Telefone" value={contact.phone} href={`tel:${contact.phone.replace(/\D/g, "")}`} iconBg="bg-[#003CFF]" />
+            <InfoCard icon={MapPin} label="Endereço" value={contact.address} iconBg="bg-[#B800FF]" />
+            <InfoCard icon={Clock} label="Horário" value={contact.hours} iconBg="bg-[#9CC7DB]" />
           </aside>
 
           {/* Form - right */}
@@ -87,11 +87,11 @@ function ContactPage() {
             <form onSubmit={submit} className="glass-panel rounded-3xl p-8 md:p-10 relative overflow-hidden">
               <div className="absolute top-0 left-0 right-0 h-1 gradient-brand" />
               <div className="flex items-center gap-3 mb-6">
-                <div className="w-11 h-11 rounded-xl gradient-brand flex items-center justify-center">
+                <div className="w-11 h-11 rounded-xl bg-[#003CFF] flex items-center justify-center">
                   <MessageSquare size={18} className="text-white" />
                 </div>
                 <div>
-                  <h2 className="text-xl font-bold">Envie uma mensagem</h2>
+                  <h2 className="text-xl font-bold ">Envie uma mensagem</h2>
                   <p className="text-xs text-muted-foreground">Todos os campos com * são obrigatórios</p>
                 </div>
               </div>
@@ -117,7 +117,7 @@ function ContactPage() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full py-3.5 rounded-full gradient-brand text-white font-semibold inline-flex justify-center items-center gap-2 shadow-[0_0_30px_rgba(0,60,255,0.4)] hover:scale-[1.01] transition-transform disabled:opacity-50"
+                className="w-full py-3.5 rounded-full bg-[#003CFF] text-white font-semibold inline-flex justify-center items-center gap-2 shadow-[0_0_30px_rgba(0,60,255,0.4)] hover:scale-[1.01] transition-transform disabled:opacity-50"
               >
                 <Send size={16} /> {loading ? "Enviando..." : "Enviar mensagem"}
               </button>
@@ -130,11 +130,11 @@ function ContactPage() {
 }
 
 function InfoCard({
-  icon: Icon, label, value, href,
-}: { icon: typeof Mail; label: string; value: string; href?: string }) {
+  icon: Icon, label, value, href, iconBg = "gradient-brand",
+}: { icon: typeof Mail; label: string; value: string; href?: string; iconBg?: string; }) {
   const inner = (
     <div className="glass-panel rounded-2xl p-5 flex items-start gap-4 hover:border-accent transition-colors">
-      <div className="w-11 h-11 rounded-xl gradient-brand flex items-center justify-center shrink-0">
+      <div className={`w-11 h-11 rounded-xl flex items-center justify-center shrink-0 ${iconBg}`}>
         <Icon size={18} className="text-white" />
       </div>
       <div>

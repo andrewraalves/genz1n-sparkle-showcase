@@ -127,7 +127,7 @@ function Careers() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3 rounded-full gradient-brand text-white font-semibold inline-flex justify-center items-center gap-2 disabled:opacity-50"
+              className="w-full py-3 rounded-full bg-[#003CFF] text-white font-semibold inline-flex justify-center items-center gap-2 disabled:opacity-50"
             >
               <Send size={16} /> {loading ? "Enviando..." : "Enviar candidatura"}
             </button>

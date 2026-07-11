@@ -25,7 +25,7 @@ export function SiteNav() {
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
         <Link to="/" className="flex items-center gap-2 font-display font-black text-lg">
           <span className="inline-block w-7 h-7 rounded-md gradient-brand shadow-[0_0_20px_rgba(184,0,255,0.5)]" />
-          <span className="text-gradient-brand">GenZ1n</span>
+          <span className="bg-gradient-to-r from-[#FEFEED] via-[#9CC7DB] to-[#B800FF] bg-clip-text text-transparent drop-shadow-[0_4px_45px_rgba(184,0,255,0.35)]">GenZ1n</span>
         </Link>
 
         <div className="hidden md:flex items-center gap-8 text-[13px] font-medium">
@@ -42,7 +42,7 @@ export function SiteNav() {
           ))}
           <Link
             to={isAuthed ? "/admin" : "/auth"}
-            className="px-4 py-2 rounded-full gradient-brand text-primary-foreground text-xs uppercase tracking-widest font-semibold shadow-[0_0_20px_rgba(0,60,255,0.35)] hover:opacity-90"
+            className="px-4 py-2 rounded-full bg-[#003CFF] text-primary-foreground text-xs uppercase tracking-widest font-semibold shadow-[0_0_20px_rgba(0,60,255,0.35)] hover:opacity-90"
           >
             {isAuthed ? "Painel" : "Admin"}
           </Link>
