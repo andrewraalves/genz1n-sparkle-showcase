@@ -439,6 +439,9 @@ function relativeTime(iso: string) {
   const d = Math.round(h / 24);
   return `${d}d`;
 }
+
+/* ----------------------------- Projects ------------------------------ */
+type Project = {
   id: string; title: string; category: string; year: string | null; image_url: string | null;
   project_url: string | null; description: string | null; sort_order: number; is_published: boolean;
 };
