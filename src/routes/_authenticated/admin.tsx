@@ -1,13 +1,18 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
 import { settingsQuery, getSetting } from "@/lib/site-queries";
 import {
   LayoutDashboard, FolderKanban, Briefcase, MessageSquare, Settings, LogOut,
-  Plus, Trash2, Save, Loader2,
+  Plus, Trash2, Save, Loader2, Search, Bell, TrendingUp, ArrowUpRight,
+  Users, Inbox, Sparkles, Activity, ExternalLink, CheckCircle2, Clock,
 } from "lucide-react";
+import {
+  AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer,
+  PieChart, Pie, Cell,
+} from "recharts";
 
 export const Route = createFileRoute("/_authenticated/admin")({
   head: () => ({ meta: [{ title: "Painel admin — GenZ1n" }] }),
