@@ -110,11 +110,11 @@ function NavItem({ icon: Icon, label, active, onClick }: { icon: typeof LayoutDa
   return (
     <button
       onClick={onClick}
-      className={`flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm whitespace-nowrap transition-colors ${
-        active ? "gradient-brand text-white" : "text-foreground/80 hover:bg-secondary"
+      className={`flex items-center gap-3 px-3 py-3 md:py-3.5 rounded-lg text-sm whitespace-nowrap transition-colors ${
+        active ? "gradient-brand text-white shadow-lg" : "text-foreground/80 hover:bg-secondary"
       }`}
     >
-      <Icon size={16} /> {label}
+      <Icon size={18} /> {label}
     </button>
   );
 }
