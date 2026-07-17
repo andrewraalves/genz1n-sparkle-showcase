@@ -2,7 +2,8 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { projectsQuery, settingsQuery, getSetting } from "@/lib/site-queries";
 import heroVideo from "../../public/video-bg.mp4";
-import { ArrowRight, Sparkles, Zap, Rocket } from "lucide-react";
+import { ArrowRight, ArrowLeft, Sparkles, Zap, Rocket } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -27,7 +28,30 @@ function Home() {
     cta_href: "/projetos",
   } as { title: string; subtitle: string; description: string; cta_label: string; cta_href: string });
 
-  const top = (projects ?? []).slice(0, 4);
+  const allProjects = projects ?? [];
+  const PAGE_SIZE = 4;
+  const pages = useMemo(() => {
+    const out: typeof allProjects[] = [];
+    for (let i = 0; i < allProjects.length; i += PAGE_SIZE) {
+      out.push(allProjects.slice(i, i + PAGE_SIZE));
+    }
+    return out.length ? out : [[]];
+  }, [allProjects]);
+  const [page, setPage] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const totalPages = pages.length;
+
+  useEffect(() => {
+    if (totalPages <= 1 || paused) return;
+    const id = setInterval(() => setPage((p) => (p + 1) % totalPages), 5000);
+    return () => clearInterval(id);
+  }, [totalPages, paused]);
+
+  useEffect(() => {
+    if (page >= totalPages) setPage(0);
+  }, [page, totalPages]);
+
+  const current = pages[page] ?? [];
 
   return (
     <main>
@@ -124,39 +148,90 @@ function Home() {
           </Link>
         </div>
 
-        <div className="grid grid-cols-12 gap-6">
-          {top.map((p, i) => (
-            <article
-              key={p.id}
-              className={`col-span-12 ${i % 2 === 0 ? "md:col-span-7" : "md:col-span-5"} group`}
+        <div
+          className="relative"
+          onMouseEnter={() => setPaused(true)}
+          onMouseLeave={() => setPaused(false)}
+        >
+          <div className="overflow-hidden">
+            <div
+              className="flex transition-transform duration-700 ease-out"
+              style={{ transform: `translateX(-${page * 100}%)` }}
             >
-              <a href={p.project_url || "#"} target="_blank" rel="noreferrer" className="block">
-                <div className="relative overflow-hidden rounded-2xl aspect-[16/10] bg-surface">
-                  {p.image_url && (
-                    <img
-                      src={p.image_url}
-                      alt={p.title}
-                      loading="lazy"
-                      className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 opacity-80 group-hover:opacity-100 transition-all duration-700"
-                    />
-                  )}
-                  <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
-                    <span className="px-3 py-1.5 rounded-full gradient-brand text-white text-xs font-semibold flex items-center gap-1">
-                      Ver <ArrowRight size={12} />
-                    </span>
-                  </div>
+              {pages.map((group, gi) => (
+                <div key={gi} className="w-full flex-shrink-0 grid grid-cols-12 gap-6">
+                  {group.map((p, i) => (
+                    <article
+                      key={p.id}
+                      className={`col-span-12 ${i % 2 === 0 ? "md:col-span-7" : "md:col-span-5"} group`}
+                    >
+                      <a href={p.project_url || "#"} target="_blank" rel="noreferrer" className="block">
+                        <div className="relative overflow-hidden rounded-2xl aspect-[16/10] bg-surface">
+                          {p.image_url && (
+                            <img
+                              src={p.image_url}
+                              alt={p.title}
+                              loading="lazy"
+                              className="w-full h-full object-cover grayscale group-hover:grayscale-0 group-hover:scale-105 opacity-80 group-hover:opacity-100 transition-all duration-700"
+                            />
+                          )}
+                          <div className="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <span className="px-3 py-1.5 rounded-full gradient-brand text-white text-xs font-semibold flex items-center gap-1">
+                              Ver <ArrowRight size={12} />
+                            </span>
+                          </div>
+                        </div>
+                        <div className="mt-4 flex justify-between items-start">
+                          <div>
+                            <h3 className="text-xl font-semibold">{p.title}</h3>
+                            <p className="text-sm text-muted-foreground">{p.category}</p>
+                          </div>
+                          <span className="text-xs font-mono text-accent mt-1">{p.year}</span>
+                        </div>
+                      </a>
+                    </article>
+                  ))}
                 </div>
-                <div className="mt-4 flex justify-between items-start">
-                  <div>
-                    <h3 className="text-xl font-semibold">{p.title}</h3>
-                    <p className="text-sm text-muted-foreground">{p.category}</p>
-                  </div>
-                  <span className="text-xs font-mono text-accent mt-1">{p.year}</span>
-                </div>
-              </a>
-            </article>
-          ))}
+              ))}
+            </div>
+          </div>
+
+          {totalPages > 1 && (
+            <>
+              <button
+                type="button"
+                aria-label="Anterior"
+                onClick={() => setPage((p) => (p - 1 + totalPages) % totalPages)}
+                className="absolute -left-2 md:-left-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full glass-panel flex items-center justify-center hover:border-accent hover:bg-accent/10 transition-colors z-10"
+              >
+                <ArrowLeft size={18} />
+              </button>
+              <button
+                type="button"
+                aria-label="Próximo"
+                onClick={() => setPage((p) => (p + 1) % totalPages)}
+                className="absolute -right-2 md:-right-6 top-1/2 -translate-y-1/2 w-12 h-12 rounded-full glass-panel flex items-center justify-center hover:border-accent hover:bg-accent/10 transition-colors z-10"
+              >
+                <ArrowRight size={18} />
+              </button>
+
+              <div className="flex justify-center gap-2 mt-8">
+                {pages.map((_, i) => (
+                  <button
+                    key={i}
+                    type="button"
+                    aria-label={`Ir para página ${i + 1}`}
+                    onClick={() => setPage(i)}
+                    className={`h-1.5 rounded-full transition-all ${i === page ? "w-8 bg-accent" : "w-2 bg-foreground/30"}`}
+                  />
+                ))}
+              </div>
+            </>
+          )}
         </div>
+        {/* current used for a11y announce */}
+        <span className="sr-only" aria-live="polite">Página {page + 1} de {totalPages}</span>
+        <span className="hidden">{current.length}</span>
       </section>
     </main>
   );
