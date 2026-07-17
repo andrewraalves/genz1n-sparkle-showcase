@@ -64,13 +64,21 @@ function AdminPage() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col md:flex-row admin-panel bg-background text-foreground">
-      <aside className="md:w-64 md:min-h-screen border-b md:border-b-0 md:border-r border-border p-4 md:p-6 glass-panel md:sticky md:top-0">
-        <Link to="/" className="flex items-center gap-2 font-display font-black text-lg mb-8">
+    <div className="min-h-screen admin-panel bg-background text-foreground">
+      <aside className="fixed top-0 left-0 z-40 w-full md:w-64 md:h-screen border-b md:border-b-0 md:border-r border-border p-4 md:p-6 glass-panel">
+        <Link to="/" className="flex items-center gap-2 font-display font-black text-lg md:mb-8">
           <span className="w-8 h-8 rounded-md gradient-brand" />
           <span className="text-gradient-brand">GenZ1n</span>
         </Link>
-        <nav className="flex md:flex-col gap-1 overflow-x-auto md:overflow-visible">
+        <nav className="hidden md:flex flex-col flex-1 justify-center gap-2 py-4">
+          <NavItem icon={LayoutDashboard} label="Dashboard" active={tab === "dashboard"} onClick={() => setTab("dashboard")} />
+          <NavItem icon={FolderKanban} label="Projetos" active={tab === "projects"} onClick={() => setTab("projects")} />
+          <NavItem icon={Briefcase} label="Vagas" active={tab === "jobs"} onClick={() => setTab("jobs")} />
+          <NavItem icon={MessageSquare} label="Mensagens" active={tab === "messages"} onClick={() => setTab("messages")} />
+          <NavItem icon={Briefcase} label="Candidaturas" active={tab === "applications"} onClick={() => setTab("applications")} />
+          <NavItem icon={Settings} label="Configurações" active={tab === "settings"} onClick={() => setTab("settings")} />
+        </nav>
+        <nav className="flex md:hidden items-center gap-1 overflow-x-auto">
           <NavItem icon={LayoutDashboard} label="Dashboard" active={tab === "dashboard"} onClick={() => setTab("dashboard")} />
           <NavItem icon={FolderKanban} label="Projetos" active={tab === "projects"} onClick={() => setTab("projects")} />
           <NavItem icon={Briefcase} label="Vagas" active={tab === "jobs"} onClick={() => setTab("jobs")} />
@@ -80,13 +88,13 @@ function AdminPage() {
         </nav>
         <button
           onClick={signOut}
-          className="mt-8 hidden md:flex items-center gap-2 text-sm text-muted-foreground hover:text-accent"
+          className="hidden md:flex items-center gap-2 text-sm text-muted-foreground hover:text-accent mt-auto pt-6 border-t border-border/30"
         >
           <LogOut size={16} /> Sair
         </button>
       </aside>
 
-      <main className="flex-1 p-6 md:p-10">
+      <main className="pt-[72px] md:pt-0 md:ml-64 flex-1 p-6 md:p-10 min-h-screen">
         {tab === "dashboard" && <Dashboard />}
         {tab === "projects" && <ProjectsAdmin />}
         {tab === "jobs" && <JobsAdmin />}
