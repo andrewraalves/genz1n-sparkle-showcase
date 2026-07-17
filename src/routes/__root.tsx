@@ -110,10 +110,12 @@ function RootComponent() {
   return (
     <QueryClientProvider client={queryClient}>
       {!isAdmin && <SiteNav />}
-      <div className={isAdmin ? "" : "pt-16"}>
-        <Outlet />
+      <div className="min-h-screen flex flex-col">
+        <div className={`${isAdmin ? "" : "pt-16"} flex-1`}>
+          <Outlet />
+        </div>
+        {!isAdmin && <SiteFooter />}
       </div>
-      {!isAdmin && <SiteFooter />}
       {!isAdmin && <Chatbot />}
       <Toaster richColors position="top-right" />
     </QueryClientProvider>
