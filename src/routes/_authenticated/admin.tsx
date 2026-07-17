@@ -64,13 +64,21 @@ function AdminPage() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col md:flex-row admin-panel bg-background text-foreground">
-      <aside className="md:w-64 md:min-h-screen border-b md:border-b-0 md:border-r border-border p-4 md:p-6 glass-panel md:sticky md:top-0">
-        <Link to="/" className="flex items-center gap-2 font-display font-black text-lg mb-8">
+    <div className="min-h-screen admin-panel bg-background text-foreground">
+      <aside className="relative md:fixed md:top-0 md:left-0 z-40 flex flex-col w-full md:w-64 md:h-screen border-b md:border-b-0 md:border-r border-border p-4 md:p-6 glass-panel">
+        <Link to="/" className="flex items-center gap-2 font-display font-black text-lg md:mb-8">
           <span className="w-8 h-8 rounded-md gradient-brand" />
           <span className="text-gradient-brand">GenZ1n</span>
         </Link>
-        <nav className="flex md:flex-col gap-1 overflow-x-auto md:overflow-visible">
+        <nav className="hidden md:flex flex-col flex-1 justify-center gap-2 py-4">
+          <NavItem icon={LayoutDashboard} label="Dashboard" active={tab === "dashboard"} onClick={() => setTab("dashboard")} />
+          <NavItem icon={FolderKanban} label="Projetos" active={tab === "projects"} onClick={() => setTab("projects")} />
+          <NavItem icon={Briefcase} label="Vagas" active={tab === "jobs"} onClick={() => setTab("jobs")} />
+          <NavItem icon={MessageSquare} label="Mensagens" active={tab === "messages"} onClick={() => setTab("messages")} />
+          <NavItem icon={Briefcase} label="Candidaturas" active={tab === "applications"} onClick={() => setTab("applications")} />
+          <NavItem icon={Settings} label="Configurações" active={tab === "settings"} onClick={() => setTab("settings")} />
+        </nav>
+        <nav className="flex md:hidden items-center gap-1 overflow-x-auto">
           <NavItem icon={LayoutDashboard} label="Dashboard" active={tab === "dashboard"} onClick={() => setTab("dashboard")} />
           <NavItem icon={FolderKanban} label="Projetos" active={tab === "projects"} onClick={() => setTab("projects")} />
           <NavItem icon={Briefcase} label="Vagas" active={tab === "jobs"} onClick={() => setTab("jobs")} />
@@ -80,13 +88,13 @@ function AdminPage() {
         </nav>
         <button
           onClick={signOut}
-          className="mt-8 hidden md:flex items-center gap-2 text-sm text-muted-foreground hover:text-accent"
+          className="hidden md:flex items-center gap-2 text-sm text-muted-foreground hover:text-accent mt-auto pt-6 border-t border-border/30"
         >
           <LogOut size={16} /> Sair
         </button>
       </aside>
 
-      <main className="flex-1 p-6 md:p-10">
+      <main className="md:ml-64 flex-1 p-6 md:p-10 min-h-screen">
         {tab === "dashboard" && <Dashboard />}
         {tab === "projects" && <ProjectsAdmin />}
         {tab === "jobs" && <JobsAdmin />}
@@ -102,11 +110,11 @@ function NavItem({ icon: Icon, label, active, onClick }: { icon: typeof LayoutDa
   return (
     <button
       onClick={onClick}
-      className={`flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm whitespace-nowrap transition-colors ${
-        active ? "gradient-brand text-white" : "text-foreground/80 hover:bg-secondary"
+      className={`flex items-center gap-3 px-3 py-3 md:py-3.5 rounded-lg text-sm whitespace-nowrap transition-colors ${
+        active ? "gradient-brand text-white shadow-lg" : "text-foreground/80 hover:bg-secondary"
       }`}
     >
-      <Icon size={16} /> {label}
+      <Icon size={18} /> {label}
     </button>
   );
 }
