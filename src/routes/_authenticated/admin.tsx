@@ -65,7 +65,7 @@ function AdminPage() {
 
   return (
     <div className="min-h-screen admin-panel bg-background text-foreground">
-      <aside className="fixed top-0 left-0 z-40 w-full md:w-64 md:h-screen border-b md:border-b-0 md:border-r border-border p-4 md:p-6 glass-panel">
+      <aside className="fixed top-0 left-0 z-40 flex flex-col w-full md:w-64 md:h-screen border-b md:border-b-0 md:border-r border-border p-4 md:p-6 glass-panel">
         <Link to="/" className="flex items-center gap-2 font-display font-black text-lg md:mb-8">
           <span className="w-8 h-8 rounded-md gradient-brand" />
           <span className="text-gradient-brand">GenZ1n</span>
