@@ -28,7 +28,30 @@ function Home() {
     cta_href: "/projetos",
   } as { title: string; subtitle: string; description: string; cta_label: string; cta_href: string });
 
-  const top = (projects ?? []).slice(0, 4);
+  const allProjects = projects ?? [];
+  const PAGE_SIZE = 4;
+  const pages = useMemo(() => {
+    const out: typeof allProjects[] = [];
+    for (let i = 0; i < allProjects.length; i += PAGE_SIZE) {
+      out.push(allProjects.slice(i, i + PAGE_SIZE));
+    }
+    return out.length ? out : [[]];
+  }, [allProjects]);
+  const [page, setPage] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const totalPages = pages.length;
+
+  useEffect(() => {
+    if (totalPages <= 1 || paused) return;
+    const id = setInterval(() => setPage((p) => (p + 1) % totalPages), 5000);
+    return () => clearInterval(id);
+  }, [totalPages, paused]);
+
+  useEffect(() => {
+    if (page >= totalPages) setPage(0);
+  }, [page, totalPages]);
+
+  const current = pages[page] ?? [];
 
   return (
     <main>
