@@ -94,7 +94,7 @@ function AdminPage() {
         </button>
       </aside>
 
-      <main className="pt-[72px] md:pt-0 md:ml-64 flex-1 p-6 md:p-10 min-h-screen">
+      <main className="md:ml-64 flex-1 p-6 md:p-10 min-h-screen">
         {tab === "dashboard" && <Dashboard />}
         {tab === "projects" && <ProjectsAdmin />}
         {tab === "jobs" && <JobsAdmin />}
