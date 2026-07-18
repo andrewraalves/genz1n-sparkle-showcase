@@ -81,7 +81,7 @@ function Home() {
         </div>
 
         <div className="relative z-10 max-w-5xl mx-auto text-center px-6 py-24">
-          <p className="text-accent font-mono text-xs tracking-[0.4em] uppercase mb-4 animate-fade-up">
+          <p className="text-white font-mono text-xs tracking-[0.4em] uppercase mb-4 animate-fade-up">
             {hero.subtitle}
           </p>
           <h1 className="font-display font-black leading-[0.9] text-[clamp(3.5rem,14vw,11rem)] tracking-tighter animate-fade-up">
