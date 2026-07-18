@@ -2,7 +2,14 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { projectsQuery, settingsQuery, getSetting } from "@/lib/site-queries";
 import heroVideo from "../../public/video-bg.mp4";
-import partnersStrip from "@/assets/partners-strip.png";
+import logoNexora from "@/assets/partners/nexora.png";
+import logoAurora from "@/assets/partners/aurora.png";
+import logoHelios from "@/assets/partners/helios.png";
+import logoQuanta from "@/assets/partners/quanta.png";
+import logoVoltaic from "@/assets/partners/voltaic.png";
+import logoPixelforge from "@/assets/partners/pixelforge.png";
+import logoOrbita from "@/assets/partners/orbita.png";
+import logoNorthwind from "@/assets/partners/northwind.png";
 import { ArrowRight, ArrowLeft, Sparkles, Zap, Rocket } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 
