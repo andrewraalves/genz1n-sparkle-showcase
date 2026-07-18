@@ -136,7 +136,7 @@ function Home() {
                   alt={p.name}
                   aria-hidden={i >= partners.length}
                   loading="lazy"
-                  className="h-12 md:h-14 w-auto shrink-0 opacity-60 hover:opacity-100 transition-opacity"
+                  className="h-26 md:h-26 w-auto shrink-0 opacity-60 hover:opacity-100 transition-opacity"
                 />
               ));
             })()}

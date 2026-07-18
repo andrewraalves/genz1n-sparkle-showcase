@@ -23,10 +23,10 @@ export function SiteFooter() {
   } as { tagline: string; copyright: string });
 
   return (
-    <footer className="relative mt-32 border-t border-border">
+    <footer className="relative  border-t border-border">
       <div className="absolute inset-0 -z-10 opacity-40 pointer-events-none">
-        <div className="blob w-[380px] h-[380px] left-[10%] top-10 bg-[#003CFF]" />
-        <div className="blob w-[420px] h-[420px] right-[5%] bottom-0 bg-[#B800FF]" style={{ animationDelay: "-6s" }} />
+        <div className="blob w-[380px] h-[380px] left-[10%] bottom-10 bg-[#003CFF]" />
+        <div className="blob w-[420px] h-[420px] right-[5%] bottom-50 bg-[#B800FF]" style={{ animationDelay: "-6s" }} />
       </div>
 
       <div className="max-w-7xl mx-auto px-6 py-16 grid grid-cols-1 md:grid-cols-4 gap-10">
