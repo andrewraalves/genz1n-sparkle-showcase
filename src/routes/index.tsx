@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { projectsQuery, settingsQuery, getSetting } from "@/lib/site-queries";
 import heroVideo from "../../public/video-bg.mp4";
+import partnersStrip from "@/assets/partners-strip.png";
 import { ArrowRight, ArrowLeft, Sparkles, Zap, Rocket } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 
