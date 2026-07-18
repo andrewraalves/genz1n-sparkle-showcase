@@ -2,7 +2,14 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { projectsQuery, settingsQuery, getSetting } from "@/lib/site-queries";
 import heroVideo from "../../public/video-bg.mp4";
-import partnersStrip from "@/assets/partners-strip.png";
+import logoNexora from "@/assets/partners/nexora.png";
+import logoAurora from "@/assets/partners/aurora.png";
+import logoHelios from "@/assets/partners/helios.png";
+import logoQuanta from "@/assets/partners/quanta.png";
+import logoVoltaic from "@/assets/partners/voltaic.png";
+import logoPixelforge from "@/assets/partners/pixelforge.png";
+import logoOrbita from "@/assets/partners/orbita.png";
+import logoNorthwind from "@/assets/partners/northwind.png";
 import { ArrowRight, ArrowLeft, Sparkles, Zap, Rocket } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 
@@ -109,17 +116,30 @@ function Home() {
           Parceiros & clientes
         </p>
         <div className="marquee-mask overflow-hidden">
-          <div className="marquee-track flex items-center">
-            {Array.from({ length: 2 }).map((_, i) => (
-              <img
-                key={i}
-                src={partnersStrip}
-                alt="Logos das empresas parceiras"
-                aria-hidden={i === 1}
-                loading="lazy"
-                className="h-16 md:h-20 w-auto shrink-0 opacity-70 hover:opacity-100 transition-opacity"
-              />
-            ))}
+          <div className="marquee-track flex items-center gap-16 md:gap-24 pr-16 md:pr-24">
+            {(() => {
+              const partners = [
+                { name: "Nexora", src: logoNexora },
+                { name: "Aurora", src: logoAurora },
+                { name: "Helios", src: logoHelios },
+                { name: "Quanta", src: logoQuanta },
+                { name: "Voltaic", src: logoVoltaic },
+                { name: "Pixelforge", src: logoPixelforge },
+                { name: "Orbita", src: logoOrbita },
+                { name: "Northwind", src: logoNorthwind },
+              ];
+              const items = [...partners, ...partners];
+              return items.map((p, i) => (
+                <img
+                  key={i}
+                  src={p.src}
+                  alt={p.name}
+                  aria-hidden={i >= partners.length}
+                  loading="lazy"
+                  className="h-12 md:h-14 w-auto shrink-0 opacity-60 hover:opacity-100 transition-opacity"
+                />
+              ));
+            })()}
           </div>
         </div>
       </section>
