@@ -102,6 +102,33 @@ function Home() {
         </div>
       </section>
 
+      {/* PARTNERS MARQUEE */}
+      <section aria-label="Parceiros" className="py-14 border-y border-border/40 bg-surface/40">
+        <p className="text-center text-accent font-mono text-[11px] tracking-[0.4em] uppercase mb-8">
+          Parceiros & clientes
+        </p>
+        <div className="marquee-mask overflow-hidden">
+          <div className="marquee-track flex items-center gap-16 px-8">
+            {(() => {
+              const partners = [
+                "NANOINCUB", "OSMUNDO", "CLICKSOFT", "ANTIGRAVITY",
+                "NEXORA", "SMARTSYS", "AURORA", "PIXELFORGE",
+                "NORTHWIND", "HELIOS", "QUANTA", "VOLTAIC",
+              ];
+              const items = [...partners, ...partners];
+              return items.map((name, i) => (
+                <div
+                  key={i}
+                  className="shrink-0 font-display font-black text-2xl md:text-3xl tracking-tight text-foreground/50 hover:text-foreground transition-colors whitespace-nowrap"
+                >
+                  {name}
+                </div>
+              ));
+            })()}
+          </div>
+        </div>
+      </section>
+
       {/* SERVICES / HIGHLIGHTS */}
       <section className="py-24 px-6 max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
