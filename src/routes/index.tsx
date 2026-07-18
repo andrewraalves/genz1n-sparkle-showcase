@@ -109,23 +109,17 @@ function Home() {
           Parceiros & clientes
         </p>
         <div className="marquee-mask overflow-hidden">
-          <div className="marquee-track flex items-center gap-16 px-8">
-            {(() => {
-              const partners = [
-                "NANOINCUB", "OSMUNDO", "CLICKSOFT", "ANTIGRAVITY",
-                "NEXORA", "SMARTSYS", "AURORA", "PIXELFORGE",
-                "NORTHWIND", "HELIOS", "QUANTA", "VOLTAIC",
-              ];
-              const items = [...partners, ...partners];
-              return items.map((name, i) => (
-                <div
-                  key={i}
-                  className="shrink-0 font-display font-black text-2xl md:text-3xl tracking-tight text-foreground/50 hover:text-foreground transition-colors whitespace-nowrap"
-                >
-                  {name}
-                </div>
-              ));
-            })()}
+          <div className="marquee-track flex items-center">
+            {Array.from({ length: 2 }).map((_, i) => (
+              <img
+                key={i}
+                src={partnersStrip}
+                alt="Logos das empresas parceiras"
+                aria-hidden={i === 1}
+                loading="lazy"
+                className="h-16 md:h-20 w-auto shrink-0 opacity-70 hover:opacity-100 transition-opacity"
+              />
+            ))}
           </div>
         </div>
       </section>
