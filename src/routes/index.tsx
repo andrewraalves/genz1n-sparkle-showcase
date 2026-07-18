@@ -116,17 +116,30 @@ function Home() {
           Parceiros & clientes
         </p>
         <div className="marquee-mask overflow-hidden">
-          <div className="marquee-track flex items-center">
-            {Array.from({ length: 2 }).map((_, i) => (
-              <img
-                key={i}
-                src={partnersStrip}
-                alt="Logos das empresas parceiras"
-                aria-hidden={i === 1}
-                loading="lazy"
-                className="h-16 md:h-20 w-auto shrink-0 opacity-70 hover:opacity-100 transition-opacity"
-              />
-            ))}
+          <div className="marquee-track flex items-center gap-16 md:gap-24 pr-16 md:pr-24">
+            {(() => {
+              const partners = [
+                { name: "Nexora", src: logoNexora },
+                { name: "Aurora", src: logoAurora },
+                { name: "Helios", src: logoHelios },
+                { name: "Quanta", src: logoQuanta },
+                { name: "Voltaic", src: logoVoltaic },
+                { name: "Pixelforge", src: logoPixelforge },
+                { name: "Orbita", src: logoOrbita },
+                { name: "Northwind", src: logoNorthwind },
+              ];
+              const items = [...partners, ...partners];
+              return items.map((p, i) => (
+                <img
+                  key={i}
+                  src={p.src}
+                  alt={p.name}
+                  aria-hidden={i >= partners.length}
+                  loading="lazy"
+                  className="h-12 md:h-14 w-auto shrink-0 opacity-60 hover:opacity-100 transition-opacity"
+                />
+              ));
+            })()}
           </div>
         </div>
       </section>
