@@ -229,64 +229,80 @@ function Dashboard() {
   }
 
   return (
-    <div className="space-y-8">
-      {/* Header row */}
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+    <div className="space-y-6 max-w-[1400px] mx-auto">
+      {/* Header */}
+      <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 pb-2">
         <div>
-          <h1 className="text-3xl md:text-4xl font-bold flex items-center gap-2">
-            Olá, {displayName}! <span className="text-3xl">👋</span>
+          <h1 className="text-2xl md:text-3xl font-bold flex items-center gap-2">
+            Olá, {displayName} <span>👋</span>
           </h1>
-          <p className="text-muted-foreground mt-1">Aqui está o resumo do que está acontecendo no site.</p>
+          <p className="text-sm text-muted-foreground mt-1">
+            Aqui está o resumo do que está acontecendo no site.
+          </p>
         </div>
-        <div className="flex items-center gap-3">
-          <div className="relative hidden md:block">
-            <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
-            <input placeholder="Buscar..." className="pl-9 pr-4 py-2.5 rounded-xl w-64 text-sm" />
+        <div className="flex items-center gap-2">
+          <div className="relative flex-1 lg:flex-none">
+            <Search size={15} className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
+            <input
+              placeholder="Buscar..."
+              className="pl-9 pr-4 h-10 rounded-xl w-full lg:w-56 text-sm"
+            />
           </div>
-          <button className="relative w-11 h-11 rounded-xl grid place-items-center border border-[rgba(0,17,103,0.12)] bg-white">
+          <button className="relative w-10 h-10 rounded-xl grid place-items-center border border-[rgba(0,17,103,0.12)] bg-white shrink-0">
             <Bell size={16} />
             {totalActivities > 0 && (
-              <span className="absolute -top-1 -right-1 min-w-5 h-5 px-1 rounded-full gradient-brand text-white text-[10px] grid place-items-center">{totalActivities}</span>
+              <span className="absolute -top-1 -right-1 min-w-[18px] h-[18px] px-1 rounded-full gradient-brand text-white text-[10px] grid place-items-center font-medium">
+                {totalActivities}
+              </span>
             )}
           </button>
-          <Link to="/admin" onClick={(e) => e.preventDefault()} className="hidden md:inline-flex px-4 py-2.5 rounded-xl gradient-brand text-white text-sm items-center gap-2">
-            <Plus size={16} /> Novo Projeto
-          </Link>
+          <button className="h-10 px-4 rounded-xl gradient-brand text-white text-sm inline-flex items-center gap-2 shrink-0">
+            <Plus size={16} /> Novo projeto
+          </button>
         </div>
       </div>
 
       {/* KPI cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5">
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
         {cards.map((c) => (
-          <div key={c.label} className="glass-panel rounded-2xl p-6">
-            <div className="flex items-start gap-4">
-              <div className={`w-12 h-12 rounded-xl grid place-items-center ${c.tint}`}>
-                <c.icon size={20} />
+          <div key={c.label} className="glass-panel rounded-2xl p-5 flex flex-col gap-4 min-h-[132px]">
+            <div className="flex items-center justify-between">
+              <div className={`w-11 h-11 rounded-xl grid place-items-center ${c.tint}`}>
+                <c.icon size={18} />
               </div>
-              <div className="flex-1 min-w-0">
-                <p className="text-sm text-muted-foreground">{c.label}</p>
-                <p className="text-3xl font-bold text-gradient-brand mt-1">{c.value}</p>
-                <p className="text-xs text-emerald-600 mt-1 flex items-center gap-1">
-                  <TrendingUp size={12} /> {c.hint}
-                </p>
-              </div>
+              <span className="text-[11px] font-medium text-emerald-600 flex items-center gap-1 bg-emerald-50 px-2 py-1 rounded-full">
+                <TrendingUp size={11} /> {c.hint}
+              </span>
+            </div>
+            <div>
+              <p className="text-xs uppercase tracking-wide text-muted-foreground font-medium">{c.label}</p>
+              <p className="text-3xl font-bold text-gradient-brand mt-1 leading-none">{c.value}</p>
             </div>
           </div>
         ))}
       </div>
 
       {/* Charts row */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
-        <div className="glass-panel rounded-2xl p-6 lg:col-span-2">
-          <div className="flex items-center justify-between mb-4">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        <div className="glass-panel rounded-2xl p-6 lg:col-span-2 flex flex-col">
+          <div className="flex items-start justify-between mb-4 gap-4">
             <div>
-              <h2 className="font-semibold">Mensagens recebidas</h2>
-              <p className="text-sm text-muted-foreground">Últimos 14 dias</p>
+              <h2 className="font-semibold text-base">Mensagens recebidas</h2>
+              <p className="text-xs text-muted-foreground mt-0.5">Últimos 14 dias</p>
             </div>
-            <span className="text-xs px-3 py-1.5 rounded-lg bg-[rgba(0,17,103,0.06)] text-[#001167]">14 dias</span>
+            <div className="flex items-center gap-3">
+              <div className="text-right">
+                <p className="text-2xl font-bold leading-none">
+                  {stats.series.reduce((s, x) => s + x.value, 0)}
+                </p>
+                <p className="text-[11px] text-muted-foreground mt-1">total no período</p>
+              </div>
+              <span className="text-[11px] px-2.5 py-1.5 rounded-lg bg-[rgba(0,17,103,0.06)] text-[#001167] font-medium">
+                14d
+              </span>
+            </div>
           </div>
-          <div className="text-3xl font-bold mb-4">{stats.series.reduce((s, x) => s + x.value, 0)}</div>
-          <div className="h-64">
+          <div className="flex-1 h-64 min-h-[240px]">
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={stats.series} margin={{ left: -20, right: 8, top: 8, bottom: 0 }}>
                 <defs>
@@ -304,36 +320,34 @@ function Dashboard() {
           </div>
         </div>
 
-        <div className="glass-panel rounded-2xl p-6">
-          <div className="flex items-center justify-between mb-4">
-            <div>
-              <h2 className="font-semibold">Distribuição de conteúdo</h2>
-              <p className="text-sm text-muted-foreground">Projetos e vagas</p>
-            </div>
+        <div className="glass-panel rounded-2xl p-6 flex flex-col">
+          <div className="mb-2">
+            <h2 className="font-semibold text-base">Distribuição de conteúdo</h2>
+            <p className="text-xs text-muted-foreground mt-0.5">Projetos e vagas</p>
           </div>
-          <div className="relative h-52">
+          <div className="relative h-44 my-2">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
-                <Pie data={donutData} innerRadius={55} outerRadius={80} paddingAngle={4} dataKey="value">
+                <Pie data={donutData} innerRadius={52} outerRadius={78} paddingAngle={4} dataKey="value">
                   {donutData.map((d) => <Cell key={d.name} fill={d.color} />)}
                 </Pie>
               </PieChart>
             </ResponsiveContainer>
             <div className="absolute inset-0 grid place-items-center pointer-events-none">
               <div className="text-center">
-                <div className="text-3xl font-bold">{publishedPct}%</div>
-                <div className="text-xs text-muted-foreground">Publicados</div>
+                <div className="text-2xl font-bold leading-none">{publishedPct}%</div>
+                <div className="text-[11px] text-muted-foreground mt-1">Publicados</div>
               </div>
             </div>
           </div>
-          <div className="mt-4 space-y-2">
+          <div className="mt-auto space-y-2 pt-2 border-t border-[rgba(0,17,103,0.08)]">
             {donutData.map((d) => (
               <div key={d.name} className="flex items-center justify-between text-sm">
-                <div className="flex items-center gap-2">
-                  <span className="w-2.5 h-2.5 rounded-full" style={{ background: d.color }} />
-                  <span>{d.name}</span>
+                <div className="flex items-center gap-2 min-w-0">
+                  <span className="w-2.5 h-2.5 rounded-full shrink-0" style={{ background: d.color }} />
+                  <span className="truncate">{d.name}</span>
                 </div>
-                <span className="font-medium">{d.value}</span>
+                <span className="font-semibold tabular-nums">{d.value}</span>
               </div>
             ))}
             {donutTotal === 0 && <p className="text-xs text-muted-foreground">Nenhum dado ainda.</p>}
@@ -342,43 +356,49 @@ function Dashboard() {
       </div>
 
       {/* Recent + Activity */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-        <div className="glass-panel rounded-2xl p-6">
+      <div className="grid grid-cols-1 lg:grid-cols-5 gap-4">
+        <div className="glass-panel rounded-2xl p-6 lg:col-span-3 flex flex-col">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="font-semibold">Projetos recentes</h2>
-            <span className="text-sm text-[#003CFF] cursor-default">Ver todos</span>
+            <div>
+              <h2 className="font-semibold text-base">Projetos recentes</h2>
+              <p className="text-xs text-muted-foreground mt-0.5">Últimos cadastrados no portfólio</p>
+            </div>
+            <span className="text-xs text-[#003CFF] cursor-default font-medium">Ver todos</span>
           </div>
-          <ul className="divide-y divide-[rgba(0,17,103,0.08)]">
+          <ul className="divide-y divide-[rgba(0,17,103,0.08)] flex-1">
             {stats.recentProjects.map((p) => (
               <li key={p.id} className="py-3 flex items-center gap-3">
                 <div className="w-10 h-10 rounded-lg overflow-hidden bg-[rgba(0,17,103,0.08)] shrink-0 grid place-items-center">
                   {p.image_url ? <img src={p.image_url} alt="" className="w-full h-full object-cover" /> : <Sparkles size={16} className="text-[#003CFF]" />}
                 </div>
                 <div className="min-w-0 flex-1">
-                  <p className="font-medium truncate">{p.title}</p>
+                  <p className="font-medium truncate text-sm">{p.title}</p>
                   <p className="text-xs text-muted-foreground truncate">{p.category}</p>
                 </div>
                 <StatusPill published={p.is_published} />
-                <span className="text-xs text-muted-foreground hidden md:inline">
+                <span className="text-xs text-muted-foreground hidden md:inline w-16 text-right">
                   {new Date(p.created_at).toLocaleDateString("pt-BR", { day: "2-digit", month: "short" })}
                 </span>
-                {p.project_url && (
-                  <a href={p.project_url} target="_blank" rel="noreferrer" className="text-muted-foreground hover:text-[#003CFF]">
+                {p.project_url ? (
+                  <a href={p.project_url} target="_blank" rel="noreferrer" className="text-muted-foreground hover:text-[#003CFF] w-4 grid place-items-center">
                     <ExternalLink size={14} />
                   </a>
-                )}
+                ) : <span className="w-4" />}
               </li>
             ))}
             {stats.recentProjects.length === 0 && <p className="text-sm text-muted-foreground py-4">Nenhum projeto ainda.</p>}
           </ul>
         </div>
 
-        <div className="glass-panel rounded-2xl p-6">
+        <div className="glass-panel rounded-2xl p-6 lg:col-span-2 flex flex-col">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="font-semibold">Atividades recentes</h2>
-            <span className="text-sm text-[#003CFF] cursor-default">Ver todas</span>
+            <div>
+              <h2 className="font-semibold text-base">Atividades recentes</h2>
+              <p className="text-xs text-muted-foreground mt-0.5">Feed cronológico</p>
+            </div>
+            <span className="text-xs text-[#003CFF] cursor-default font-medium">Ver todas</span>
           </div>
-          <ul className="space-y-4">
+          <ul className="space-y-4 flex-1">
             {activities.map((a) => (
               <li key={a.id} className="flex items-start gap-3">
                 <div className={`w-9 h-9 rounded-full grid place-items-center text-white shrink-0 ${a.color}`}>
@@ -388,7 +408,7 @@ function Dashboard() {
                   <p className="text-sm font-medium truncate">{a.title}</p>
                   <p className="text-xs text-muted-foreground truncate">{a.subtitle}</p>
                 </div>
-                <span className="text-xs text-muted-foreground whitespace-nowrap flex items-center gap-1">
+                <span className="text-[11px] text-muted-foreground whitespace-nowrap flex items-center gap-1">
                   <Clock size={11} /> {relativeTime(a.when)}
                 </span>
               </li>
@@ -398,21 +418,21 @@ function Dashboard() {
         </div>
       </div>
 
-      {/* Quick summary bar */}
-      <div className="glass-panel rounded-2xl p-6 flex flex-col md:flex-row items-start md:items-center gap-4 justify-between">
+      {/* Status bar */}
+      <div className="glass-panel rounded-2xl px-6 py-4 flex flex-col md:flex-row items-start md:items-center gap-3 justify-between">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl grid place-items-center bg-[#E6ECFF] text-[#003CFF]">
+          <div className="w-10 h-10 rounded-xl grid place-items-center bg-[#E6ECFF] text-[#003CFF] shrink-0">
             <Activity size={18} />
           </div>
           <div>
-            <p className="font-semibold">Tudo funcionando normalmente</p>
-            <p className="text-sm text-muted-foreground">
+            <p className="font-semibold text-sm">Tudo funcionando normalmente</p>
+            <p className="text-xs text-muted-foreground">
               {stats.publishedProjects} projetos publicados · {stats.activeJobs} vagas abertas · {stats.messages} mensagens totais
             </p>
           </div>
         </div>
-        <div className="flex items-center gap-2 text-sm text-emerald-600">
-          <CheckCircle2 size={16} /> Sistema saudável
+        <div className="flex items-center gap-2 text-xs text-emerald-600 font-medium bg-emerald-50 px-3 py-1.5 rounded-full">
+          <CheckCircle2 size={14} /> Sistema saudável
         </div>
       </div>
     </div>
