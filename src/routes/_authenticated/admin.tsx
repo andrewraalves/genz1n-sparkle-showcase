@@ -65,8 +65,8 @@ function AdminPage() {
 
   return (
     <div className="min-h-screen admin-panel bg-background text-foreground">
-      <aside className="relative md:fixed md:top-0 md:left-0 z-40 flex flex-col w-full md:w-64 md:h-screen border-b md:border-b-0 md:border-r border-border p-4 md:p-6 glass-panel">
-        <Link to="/" className="flex items-center gap-2 font-display font-black text-lg md:mb-8">
+      <aside className="relative  md:fixed md:top-0 md:left-0 z-40 flex flex-col w-full md:w-64 md:h-screen border-b md:border-b-0 md:border-r border-border p-4 md:p-6 glass-panel">
+        <Link to="/" className="flex items-center gap-2 font-display font-black text-lg md:mb-8 ">
           <span className="w-8 h-8 rounded-md gradient-brand" />
           <span className="text-gradient-brand">GenZ1n</span>
         </Link>
@@ -78,7 +78,7 @@ function AdminPage() {
           <NavItem icon={Briefcase} label="Candidaturas" active={tab === "applications"} onClick={() => setTab("applications")} />
           <NavItem icon={Settings} label="Configurações" active={tab === "settings"} onClick={() => setTab("settings")} />
         </nav>
-        <nav className="flex md:hidden items-center gap-1 overflow-x-auto">
+        <nav className="flex md:hidden items-center gap-1 overflow-x-auto ">
           <NavItem icon={LayoutDashboard} label="Dashboard" active={tab === "dashboard"} onClick={() => setTab("dashboard")} />
           <NavItem icon={FolderKanban} label="Projetos" active={tab === "projects"} onClick={() => setTab("projects")} />
           <NavItem icon={Briefcase} label="Vagas" active={tab === "jobs"} onClick={() => setTab("jobs")} />
@@ -88,14 +88,14 @@ function AdminPage() {
         </nav>
         <button
           onClick={signOut}
-          className="hidden md:flex items-center gap-2 text-sm text-muted-foreground hover:text-accent mt-auto pt-6 border-t border-border/30"
+          className="hidden md:flex items-center cursor-pointer gap-2 text-sm text-muted-foreground hover:text-accent mt-auto pt-6 border-t border-border/30"
         >
           <LogOut size={16} /> Sair
         </button>
       </aside>
 
-      <main className="md:ml-64 flex-1 p-6 md:p-10 min-h-screen">
-        {tab === "dashboard" && <Dashboard />}
+      <main className="md:ml-64 flex-1 p-6 md:p-10 min-h-screen ">
+        {tab === "dashboard" && <Dashboard onGoToProjects={() => setTab("projects")} />}
         {tab === "projects" && <ProjectsAdmin />}
         {tab === "jobs" && <JobsAdmin />}
         {tab === "messages" && <MessagesAdmin />}
@@ -110,7 +110,7 @@ function NavItem({ icon: Icon, label, active, onClick }: { icon: typeof LayoutDa
   return (
     <button
       onClick={onClick}
-      className={`flex items-center gap-3 px-3 py-3 md:py-3.5 rounded-lg text-sm whitespace-nowrap transition-colors ${
+      className={`flex items-center gap-3 px-3 py-3 md:py-3.5 rounded-lg text-sm whitespace-nowrap transition-colors cursor-pointer ${
         active ? "gradient-brand text-white shadow-lg" : "text-foreground/80 hover:bg-secondary"
       }`}
     >
@@ -127,7 +127,7 @@ type RecentProject = {
 type RecentMessage = { id: string; name: string; subject: string | null; created_at: string };
 type RecentApplication = { id: string; full_name: string; created_at: string };
 
-function Dashboard() {
+function Dashboard({ onGoToProjects }: { onGoToProjects: () => void }) {
   const { data: user } = useQuery({
     queryKey: ["admin_user"],
     queryFn: async () => (await supabase.auth.getUser()).data.user,
@@ -249,9 +249,13 @@ function Dashboard() {
               <span className="absolute -top-1 -right-1 min-w-5 h-5 px-1 rounded-full gradient-brand text-white text-[10px] grid place-items-center">{totalActivities}</span>
             )}
           </button>
-          <Link to="/admin" onClick={(e) => e.preventDefault()} className="hidden md:inline-flex px-4 py-2.5 rounded-xl gradient-brand text-white text-sm items-center gap-2">
+          <button
+            type="button"
+            onClick={onGoToProjects}
+            className="hidden cursor-pointer md:inline-flex px-4 py-2.5 rounded-xl gradient-brand text-white text-sm items-center gap-2"
+          >
             <Plus size={16} /> Novo Projeto
-          </Link>
+          </button>
         </div>
       </div>
 
@@ -491,8 +495,8 @@ function ProjectsAdmin() {
           <h1 className="text-3xl font-bold">Projetos</h1>
           <p className="text-muted-foreground">Gerencie o portfólio do site.</p>
         </div>
-        <button onClick={add} className="px-5 py-2.5 rounded-full gradient-brand text-white text-sm inline-flex items-center gap-2">
-          <Plus size={16} /> Novo
+        <button onClick={add} className="px-5 cursor-pointer py-2.5 rounded-full gradient-brand text-white text-sm inline-flex items-center gap-2">
+          <Plus size={16} /> Novo Projeto
         </button>
       </div>
 
@@ -528,10 +532,10 @@ function ProjectRow({ project, onSave, onDelete }: { project: Project; onSave: (
         </label>
       </div>
       <div className="flex md:flex-col gap-2">
-        <button onClick={() => onSave(p)} className="px-3 py-2 rounded-lg gradient-brand text-white text-xs inline-flex items-center gap-1">
+        <button onClick={() => onSave(p)} className="px-3 cursor-pointer py-2 rounded-lg gradient-brand text-white text-xs inline-flex items-center gap-1">
           <Save size={12} /> Salvar
         </button>
-        <button onClick={onDelete} className="px-3 py-2 rounded-lg bg-destructive/20 text-destructive text-xs inline-flex items-center gap-1">
+        <button onClick={onDelete} className="px-3 cursor-pointer py-2 rounded-lg bg-destructive/20 text-destructive text-xs inline-flex items-center gap-1">
           <Trash2 size={12} /> Excluir
         </button>
       </div>
@@ -577,8 +581,8 @@ function JobsAdmin() {
           <h1 className="text-3xl font-bold">Vagas</h1>
           <p className="text-muted-foreground">Gerencie as posições abertas.</p>
         </div>
-        <button onClick={add} className="px-5 py-2.5 rounded-full gradient-brand text-white text-sm inline-flex items-center gap-2">
-          <Plus size={16} /> Nova
+        <button onClick={add} className="px-5 cursor-pointer py-2.5 rounded-full gradient-brand text-white text-sm inline-flex items-center gap-2">
+          <Plus size={16} /> Cadastrar Vaga
         </button>
       </div>
       <div className="space-y-4">
@@ -612,8 +616,8 @@ function JobRow({ job, onSave, onDelete }: { job: Job; onSave: (j: Partial<Job>)
           <Input label="Ordem" type="number" value={String(j.sort_order)} onChange={(v) => setJ({ ...j, sort_order: Number(v) || 0 })} />
         </div>
         <div className="flex gap-2">
-          <button onClick={() => onSave(j)} className="px-4 py-2 rounded-lg gradient-brand text-white text-xs inline-flex items-center gap-1"><Save size={12} /> Salvar</button>
-          <button onClick={onDelete} className="px-4 py-2 rounded-lg bg-destructive/20 text-destructive text-xs inline-flex items-center gap-1"><Trash2 size={12} /> Excluir</button>
+          <button onClick={() => onSave(j)} className="px-4 cursor-pointer py-2 rounded-lg gradient-brand text-white text-xs inline-flex items-center gap-1"><Save size={12} /> Salvar</button>
+          <button onClick={onDelete} className="px-4 py-2 cursor-pointer rounded-lg bg-destructive/20 text-destructive text-xs inline-flex items-center gap-1"><Trash2 size={12} /> Excluir</button>
         </div>
       </div>
     </div>
@@ -788,7 +792,7 @@ function Section({ title, children, onSave, saving }: { title: string; children:
     <div className="glass-panel rounded-2xl p-6">
       <div className="flex justify-between items-center mb-5">
         <h2 className="text-xl font-bold">{title}</h2>
-        <button onClick={onSave} disabled={saving} className="px-4 py-2 rounded-full gradient-brand text-white text-xs inline-flex items-center gap-1 disabled:opacity-50">
+        <button onClick={onSave} disabled={saving} className="px-4 cursor-pointer py-2 rounded-full gradient-brand text-white text-xs inline-flex items-center gap-1 disabled:opacity-50">
           <Save size={12} /> Salvar
         </button>
       </div>

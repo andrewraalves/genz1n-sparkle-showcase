@@ -191,7 +191,7 @@ body:has(.admin-panel) {
 }
 
 .admin-panel aside.glass-panel {
-  background: #001167 !important;
+  background: #0a0a0a !important;
   backdrop-filter: none !important;
   box-shadow: none !important;
 }
@@ -223,7 +223,7 @@ body:has(.admin-panel) {
 
 /* Main Area Content Panel Customization */
 .admin-panel main {
-  background-color: #FEFEED;
+  background-color: #fdfdfd;
 }
 
 /* Metrics Cards and Rows (Converting glass panels into elegant cards) */
@@ -267,7 +267,7 @@ body:has(.admin-panel) {
   accent-color: #003CFF !important;
 }
 
-/* Primary buttons using Solid Bright Blue #003CFF */
+/* Primary buttons in the panel use the main brand blue */
 .admin-panel .gradient-brand {
   background-color: #003CFF !important;
   background-image: none !important;
@@ -275,7 +275,10 @@ body:has(.admin-panel) {
   transition: background-color 0.2s ease, transform 0.2s ease;
 }
 
-.admin-panel .gradient-brand:hover {
-  background-color: #002ecc !important;
+/* Sidebar active item keeps the lighter blue tone */
+.admin-panel aside nav button.gradient-brand {
+  background-color: #9CC7DB !important;
+  background-image: none !important;
+  color: #FFFFFF !important;
 }
 

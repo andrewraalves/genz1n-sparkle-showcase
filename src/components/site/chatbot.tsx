@@ -69,7 +69,7 @@ export function Chatbot() {
         <button
           onClick={() => setOpen(true)}
           aria-label="Abrir chat"
-          className="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-[#003CFF] text-white shadow-[0_0_30px_rgba(184,0,255,0.5)] flex items-center justify-center hover:scale-105 transition-transform"
+          className="fixed cursor-pointer bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-[#003CFF] text-white shadow-[0_0_30px_rgba(184,0,255,0.5)] flex items-center justify-center hover:scale-105 transition-transform"
         >
           <MessageCircle size={24} />
         </button>
@@ -82,7 +82,7 @@ export function Chatbot() {
               <p className="text-sm font-semibold text-white">Assistente GenZ1n</p>
               <p className="text-[10px] text-white/70 uppercase tracking-widest">Online</p>
             </div>
-            <button onClick={() => setOpen(false)} className="text-white/80 hover:text-white">
+            <button onClick={() => setOpen(false)} className="text-white/80 hover:text-white cursor-pointer">
               <X size={20} />
             </button>
           </header>
@@ -125,7 +125,7 @@ export function Chatbot() {
             <button
               type="submit"
               disabled={loading || !input.trim()}
-              className="w-10 h-10 rounded-full gradient-brand text-white flex items-center justify-center disabled:opacity-40"
+              className="w-10 h-10 cursor-pointer rounded-full gradient-brand text-white flex items-center justify-center disabled:opacity-40"
             >
               <Send size={16} />
             </button>
